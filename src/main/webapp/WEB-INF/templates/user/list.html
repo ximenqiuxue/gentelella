@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>shoulder</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/font-awesome.min.css}">
+    <!-- NProgress -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/nprogress.css}">
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
+    <!-- Custom Theme Style -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/custom.min.css}">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!--menu-->
+        <div th:replace="/common/menu::menu"></div>
+        <!--/menu-->
+
+        <!-- top navigation -->
+        <div th:replace="/common/navigation::top-navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>用户列表</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table id="datatable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>用户名</th>
+                                    <th>邮箱</th>
+                                    <th>电话</th>
+                                    <th>创建时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:replace="/common/footer::footer"></div>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script type="text/javascript" th:src="@{/static/js/fastclick.js}"></script>
+<!-- NProgress -->
+<script type="text/javascript" th:src="@{/static/js/nprogress.js}"></script>
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jszip.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/pdfmake.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/vfs_fonts.js}"></script>
+<!-- Custom Theme Scripts -->
+<script type="text/javascript" th:src="@{/static/js/custom.min.js}"></script>
+
+</body>
+</html>
