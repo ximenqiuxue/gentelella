@@ -67,8 +67,8 @@
                                     <td th:text="${user.telephone}"></td>
                                     <td th:text="${user.createTime}"></td>
                                     <td>
-                                        <button type="button" class="btn btn-round btn-info btn-xs" th:onclick="'javascript: editUser('+${user.id}+')' ">编辑</button>
-                                        <button type="button" class="btn btn-round btn-danger btn-xs" th:onclick="'javascript: deleteUser(\''+${user.username}+'\')' ">删除</button>
+                                        <a type="button" class="btn btn-round btn-info btn-xs" th:href="@{/user/toEdit.do(id=${user.id})}">编辑</a>
+                                        <button type="button" class="btn btn-round btn-danger btn-xs">删除</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -94,24 +94,7 @@
 <script type="text/javascript" th:src="@{/static/js/fastclick.js}"></script>
 <!-- NProgress -->
 <script type="text/javascript" th:src="@{/static/js/nprogress.js}"></script>
-<!-- Datatables -->
-<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/jszip.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/pdfmake.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/vfs_fonts.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/custom.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/user/user-edit.js}"></script>
 </body>
 </html>

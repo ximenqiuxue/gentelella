@@ -16,13 +16,14 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> findEntity() {
+    public List<User> findEntity() throws Exception {
         List<User> userList = new ArrayList<User>();
-        try {
-            userList = userMapper.findAll();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        userList = userMapper.findAll();
         return userList;
+    }
+
+    @Override
+    public User findUserById(Integer id) throws Exception {
+        return userMapper.findEntityById(id);
     }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- NProgress -->
+    <link th:href="@{/static/css/nprogress.css}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link th:href="@{/static/css/custom.min.css}" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+        <div class="col-md-12">
+            <div class="col-middle">
+                <div class="text-center text-center">
+                    <h1 class="error-number">ERROR</h1>
+                    <h2>Sorry but we couldn't find this page</h2>
+                    <p></p>
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">×</span>
+                            </button>
+                            <span th:text="${message}"></span>
+                            <a href="#">Report this?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script type="text/javascript" th:src="@{/static/js/fastclick.js}"></script>
+<!-- NProgress -->
+<script type="text/javascript" th:src="@{/static/js/nprogress.js}"></script>
+<!-- Custom Theme Scripts -->
+<script type="text/javascript" th:src="@{/static/js/custom.min.js}"></script>
+</body>
+</html>

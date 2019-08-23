@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> findEntity();
+    List<User> findEntity() throws Exception;
+
+    User findUserById(Integer id) throws Exception;
 }
