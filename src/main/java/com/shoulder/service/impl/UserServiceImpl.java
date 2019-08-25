@@ -26,4 +26,5 @@ public class UserServiceImpl implements UserService {
     public User findUserById(Integer id) throws Exception {
         return userMapper.findEntityById(id);
     }
+
 }

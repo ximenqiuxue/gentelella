@@ -4,6 +4,7 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    private Boolean rememberMe = false;
     private String email;
     private String gender;
     private String telephone;
@@ -16,11 +17,12 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", rememberMe=" + rememberMe +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", salt='" + salt + '\'' +
-                ", createTime=" + createTime +
+                ", createTime='" + createTime + '\'' +
                 '}';
     }
 
@@ -46,6 +48,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(Boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     public String getEmail() {
