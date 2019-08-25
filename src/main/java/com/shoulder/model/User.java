@@ -5,6 +5,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String gender;
     private String telephone;
     private String salt;
     private String createTime;
@@ -16,9 +17,10 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", salt='" + salt + '\'' +
-                ", createTime='" + createTime + '\'' +
+                ", createTime=" + createTime +
                 '}';
     }
 
@@ -52,6 +54,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getTelephone() {

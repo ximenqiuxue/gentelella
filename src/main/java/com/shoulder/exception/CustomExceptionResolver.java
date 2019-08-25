@@ -49,7 +49,6 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
             }
             return modelAndView;
         }else {
-            System.out.println("message : "+message);
             modelAndView.addObject("message", message);
             //不是json数据,携带message到跳转到错误页面
             modelAndView.setViewName("error/page-error");
