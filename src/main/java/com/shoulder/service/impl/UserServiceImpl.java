@@ -5,11 +5,13 @@ import com.shoulder.model.User;
 import com.shoulder.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -25,6 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(Integer id) throws Exception {
         return userMapper.findEntityById(id);
+    }
+
+    @Override
+    public User findUserByName(String username) {
+        return userMapper.findEntityByName(username);
     }
 
 }

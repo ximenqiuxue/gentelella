@@ -1,12 +1,21 @@
 package com.shoulder.service;
 
 import com.shoulder.model.Permission;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
-@Service
 public interface PermissionService {
 
-    public Set<String> getByUserName(String username) throws Exception;
+    public List<Permission> getAllEntity();
+
+    public List<Permission> getPermission(String username) throws Exception;
+
+    public Set<String> getPermissionName(String username) throws Exception;
+
+    public Set<String> getPermissionUrls(String username) throws Exception;
+
+    public boolean needInterceptor(String requestUrl);
+
+
 }

@@ -7,6 +7,9 @@
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
 
+    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
+    <mvc:annotation-driven/>
+
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
     <context:component-scan base-package="com.shoulder.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -29,9 +32,6 @@
     <mvc:resources location="/static/css/" mapping="/css/**"/>
     <mvc:resources location="/static/js/" mapping="/js/**"/>
     <mvc:resources location="/static/images/" mapping="/image/**"/>
-
-    <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
-    <mvc:annotation-driven/>
 
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
     <bean id="templateResolver"
@@ -61,8 +61,6 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
-    <bean id="exceptionHandler" class="com.shoulder.exception.CustomExceptionResolver"></bean>
-
     <!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
 
@@ -71,5 +69,7 @@
 
     <!-- 静态资源映射 -->
     <mvc:resources location="/static/" mapping="/static/**" cache-period="31536000"/>
+
+    <bean id="exceptionHandler" class="com.shoulder.exception.CustomExceptionResolver"></bean>
 
 </beans>

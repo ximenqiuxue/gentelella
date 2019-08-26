@@ -3,13 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shoulder.mapper.PermissionMapper">
-    <select id="findByUserName">
-        SELECT name FROM permission WHERE id IN (
-            SELECT pid FROM (
-                SELECT rp.rid,rp.pid,ru.uid FROM (
-                    SELECT rid,pid FROM role
-                    LEFT JOIN role_permission ON role.id = role_permission.rid) rp
-                    LEFT JOIN (SELECT rid,uid FROM user LEFT JOIN user_role ON user.id = user_role.uid) ru ON rp.rid = ru.rid) u
-                    WHERE u.uid = (SELECT id from user WHERE user.username =#{username}))
+    <select id="findPermission" parameterType="String" resultType="Permission">
+        SELECT p.* FROM user u
+        LEFT JOIN user_role ru ON u.id=ru.uid
+        LEFT JOIN role r ON r.id = ru.rid
+        LEFT JOIN role_permission rp ON r.id=rp.rid
+        LEFT JOIN permission p ON p.id=rp.pid
+        WHERE u.username=#{username}
     </select>
 </mapper>

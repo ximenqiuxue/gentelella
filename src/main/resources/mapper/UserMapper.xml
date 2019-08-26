@@ -3,7 +3,5 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shoulder.mapper.UserMapper">
-    <select id="findEntityById" parameterType="Integer" resultType="com.shoulder.model.User">
-        select id, username, email, gender, telephone, create_time from user where id=#{id}
-    </select>
+
 </mapper>

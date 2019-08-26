@@ -11,4 +11,9 @@ public class CommonController {
     public String toIndex() {
         return "common/index";
     }
+
+    @RequestMapping(value = "/unauthorized")
+    public String toUnauthorized() {
+        return "error/unauthorized";
+    }
 }

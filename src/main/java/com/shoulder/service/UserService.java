@@ -9,4 +9,6 @@ public interface UserService {
     List<User> findEntity() throws Exception;
 
     User findUserById(Integer id) throws Exception;
+
+    User findUserByName(String username);
 }

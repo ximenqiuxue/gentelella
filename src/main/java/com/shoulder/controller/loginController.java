@@ -5,12 +5,18 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class loginController {
+
+    private static final Logger log = LoggerFactory.getLogger(loginController.class);
 
     @RequestMapping(value = "/login")
     public String toIndex() {
@@ -27,13 +33,15 @@ public class loginController {
             session.setAttribute("subject", subject);
             return "redirect:/common/index.do";
         } catch (AuthenticationException e) {
+            System.out.print("AuthenticationException :"+e.toString());
             model.addAttribute("error", "验证失败");
             return "redirect:/login.do";
         }
     }
 
     @RequestMapping(value = "/logout")
-    public String toLogout(){
-        return "redirect:/login.do";
+    public String toLogout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "common/login";
     }
 }
