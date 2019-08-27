@@ -101,18 +101,12 @@
         	3). logout 登出.
         	4). roles 角色过滤器
         -->
-        <property name="filterChainDefinitions">
-            <value>
-                /login.do = anon
-                /loginValidate.do = anon
-                /common/unauthorized.do = anon
-                /static/**= anon
-                /logout.do = logout
-                <!--everything else requires authentication-->
-                /** = url
-            </value>
-        </property>
+        <property name="filterChainDefinitionMap" ref="filterChainDefinitionMap"/>
     </bean>
+
+    <bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapBuilder" factory-method="buildFilterChainDefinitionMap"></bean>
+
+    <bean id="filterChainDefinitionMapBuilder" class="com.shoulder.factory.FilterChainDefinitionMapBuilder"></bean>
 
     <!-- 退出过滤器 -->
     <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
