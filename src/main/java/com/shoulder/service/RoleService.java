@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface RoleService {
 
-    public List<Role> getRole(String username) throws Exception;
+    List<Role> getRole(String username) throws Exception;
 
-    public Set<String> getRoleName(String username) throws Exception;
+    Set<String> getRoleName(String username) throws Exception;
 }

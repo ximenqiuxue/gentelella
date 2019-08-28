@@ -4,6 +4,7 @@ import com.shoulder.model.User;
 import com.shoulder.service.PermissionService;
 import com.shoulder.service.RoleService;
 import com.shoulder.service.UserService;
+import org.apache.log4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
 public class ShiroRealm extends AuthorizingRealm {
+
+    private static final Logger log = Logger.getLogger(ShiroRealm.class);
 
     @Autowired
     private PermissionService permissionService;
@@ -33,8 +36,8 @@ public class ShiroRealm extends AuthorizingRealm {
             //通过service获取角色和权限
             Set<String> permissions = permissionService.getPermissionName(username);
             Set<String> roles = roleService.getRoleName(username);
-            System.out.println("permissions : " + permissions);
-            System.out.println("roles : " + roles);
+            log.info("permissions : " + permissions);
+            log.info("roles : " + roles);
             //把通过service获取到的角色和权限放进授权对象
             simpleAuthorizationInfo.setStringPermissions(permissions);
             simpleAuthorizationInfo.setRoles(roles);

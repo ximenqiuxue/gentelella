@@ -10,7 +10,7 @@ import java.util.Set;
 @Repository
 public interface PermissionMapper {
 
-    public List<Permission> findPermission(String username) throws Exception;
+    List<Permission> findPermission(String username) throws Exception;
 
     @Select("SELECT * FROM permission;")
     List<Permission> findAllEntity();

@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface RoleMapper {
 
-    public List<Role> findRole(String username) throws Exception;
+    List<Role> findRole(String username) throws Exception;
 }
