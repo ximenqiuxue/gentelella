@@ -11,7 +11,7 @@ public class FilterChainDefinitionMapBuilder {
         map.put("/loginValidate.do", "anon");
         map.put("/common/unauthorized.do", "anon");
         map.put("/logout.do", "anon");
-        map.put("/user/toEdit.do", "roles[admin]");
+        map.put("/user/toUpdateUser.do", "roles[admin]");
         map.put("/**", "url");
         return map;
     }

@@ -15,7 +15,8 @@
                 <li class="">
                     <a href="javascript:" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img th:src="@{/static/images/img.jpg}" alt="">ximen
+                        <img th:src="@{/static/images/img.jpg}" alt="">
+                            <span th:text="${#session.getAttribute('subject').principal}"/>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -41,7 +42,7 @@
                         <li>
                             <a>
                                 <span class="image"><img th:src="@{/static/images/img.jpg}" alt="Profile Image"/></span>
-                                    <span>
+                                <span>
                                         <span>John Smith</span>
                                         <span class="time">3 mins ago</span>
                                     </span>
@@ -51,7 +52,7 @@
                         <li>
                             <a>
                                 <span class="image"><img th:src="@{/static/images/img.jpg}" alt="Profile Image"/></span>
-                                    <span>
+                                <span>
                                       <span>John Smith</span>
                                       <span class="time">3 mins ago</span>
                                     </span>

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -18,8 +20,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> findEntity() throws Exception {
-        List<User> userList = new ArrayList<User>();
+    public List<Map<String, Object>> findEntity() throws Exception {
+        List<Map<String, Object>> userList = new ArrayList<Map<String, Object>>();
         userList = userMapper.findAll();
         return userList;
     }
