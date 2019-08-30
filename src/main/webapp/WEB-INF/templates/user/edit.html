@@ -28,7 +28,7 @@
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/custom.min.css}">
     <!-- EditJs -->
-    <script type="text/javascript" th:src="@{/static/js/user/user-edit.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/static/js/user/user-edit.js}"></script>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -106,29 +106,29 @@
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="telephone">部门<span class="required">*</span>
+                                               for="telephone">角色<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control">
-                                                <option>Choose option</option>
-                                                <option>Option one</option>
-                                                <option>Option two</option>
-                                                <option>Option three</option>
-                                                <option>Option four</option>
+                                            <select name="rid" class="form-control" required>
+                                                <option th:selected="${user.rid eq role.id}"
+                                                        th:each="role:${roles}"
+                                                        th:value="${role.id}"
+                                                        th:text="${role.desc}">
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                               for="telephone">角色<span class="required">*</span>
+                                               for="telephone">部门<span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select class="form-control">
-                                                <option>Choose option</option>
-                                                <option>Option one</option>
-                                                <option>Option two</option>
-                                                <option>Option three</option>
-                                                <option>Option four</option>
+                                            <select name="deptId" class="form-control" required>
+                                                <option th:selected="${user.deptId eq dept.id}"
+                                                        th:each="dept:${departments}"
+                                                        th:value="${dept.id}"
+                                                        th:text="${dept.name}">
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -178,5 +178,18 @@
 <script type="text/javascript" th:src="@{/static/js/common/icheck.min.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/common/custom.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var BASEPATH = /*[[@{/}]]*/ '';
+    /*]]>*/
+    function getRoles() {
+        $.ajax({
+            url: BASEPATH + '/role/list.do',
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+</script>
 </body>
 </html>

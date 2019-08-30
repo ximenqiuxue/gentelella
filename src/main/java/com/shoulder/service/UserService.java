@@ -10,7 +10,7 @@ public interface UserService {
 
     List<Map<String, Object>> findEntity() throws Exception;
 
-    User findUserById(Integer id) throws Exception;
+    Map<String, Object> findUserById(Integer id) throws Exception;
 
     User findUserByName(String username);
 }

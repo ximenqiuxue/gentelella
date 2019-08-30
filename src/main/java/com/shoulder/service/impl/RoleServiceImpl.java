@@ -32,4 +32,9 @@ public class RoleServiceImpl implements RoleService {
         }
         return roleName;
     }
+
+    @Override
+    public List<Role> getAll() throws Exception {
+        return roleMapper.findAll();
+    }
 }

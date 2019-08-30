@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Integer id) throws Exception {
+    public Map<String, Object> findUserById(Integer id) throws Exception {
         return userMapper.findEntityById(id);
     }
 

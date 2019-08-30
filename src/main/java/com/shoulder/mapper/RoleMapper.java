@@ -1,6 +1,7 @@
 package com.shoulder.mapper;
 
 import com.shoulder.model.Role;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,4 +10,7 @@ import java.util.List;
 public interface RoleMapper {
 
     List<Role> findRole(String username) throws Exception;
+
+    @Select("SELECT * FROM role")
+    List<Role> findAll() throws Exception;
 }

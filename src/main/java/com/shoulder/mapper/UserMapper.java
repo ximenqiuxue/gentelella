@@ -23,8 +23,7 @@ public interface UserMapper {
      * @return
      * @throws Exception
      */
-    @Select("SELECT id, username, email, gender, telephone, create_time FROM user WHERE id=#{id};")
-    User findEntityById(Integer id) throws Exception;
+    Map<String, Object> findEntityById(Integer id) throws Exception;
 
     /**
      * shiro认证

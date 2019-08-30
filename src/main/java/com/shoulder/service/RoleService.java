@@ -10,4 +10,6 @@ public interface RoleService {
     List<Role> getRole(String username) throws Exception;
 
     Set<String> getRoleName(String username) throws Exception;
+
+    List<Role> getAll() throws Exception;
 }

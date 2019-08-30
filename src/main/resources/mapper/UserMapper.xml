@@ -3,11 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shoulder.mapper.UserMapper">
-    <select id="findAll" resultType="java.util.HashMap">
+    <select id="findAll" resultType="java.util.Map">
         SELECT u.id, u.username, u.email, u.gender, u.telephone, u.create_time createTime, d.id deptId, d.name deptName, r.id rId, r.name roleName FROM user u
         LEFT JOIN user_dept ud ON u.id = ud.uid
         LEFT JOIN department d ON ud.dept_id = d.id
         LEFT JOIN user_role ur ON u.id = ur.uid
         LEFT JOIN role r ON r.id = ur.rid
+    </select>
+
+    <select id="findEntityById" parameterType="Integer" resultType="java.util.Map">
+        SELECT u.id, u.username, u.email, u.gender, u.telephone, u.create_time createTime, ur.rid, ud.dept_id deptId FROM user u
+        LEFT JOIN user_role ur ON u.id = ur.uid
+        LEFT JOIN user_dept ud ON u.id = ud.uid
+        WHERE u.id=#{id}
     </select>
 </mapper>
