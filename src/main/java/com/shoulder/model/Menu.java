@@ -1,11 +1,15 @@
 package com.shoulder.model;
 
-public class menu {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Menu {
     private Long id;
     private String name;
     private String url;
     private String icon;
     private Long pid;
+    private List<Menu> children = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -15,6 +19,7 @@ public class menu {
                 ", url='" + url + '\'' +
                 ", icon='" + icon + '\'' +
                 ", pid=" + pid +
+                ", children=" + children +
                 '}';
     }
 
@@ -56,5 +61,13 @@ public class menu {
 
     public void setPid(Long pid) {
         this.pid = pid;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 }

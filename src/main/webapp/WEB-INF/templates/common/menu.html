@@ -30,48 +30,13 @@
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> 首页 <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a th:href="@{/common/index.do}">控制台</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-cog"></i> 系统管理 <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="form.html">菜单管理</a></li>
-                            <li><a th:href="@{/role/index.do}">角色管理</a></li>
-                            <li><a href="form_validation.html">授权管理</a></li>
-                            <li><a th:href="@{/user/index.do}">用户管理</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-sitemap"></i> 部门管理 <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="#level1_1">Level One</a>
-                            <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li class="sub_menu"><a href="level2.html">Level Two</a>
-                                    </li>
-                                    <li><a href="#level2_1">Level Two</a>
-                                    </li>
-                                    <li><a href="#level2_2">Level Two</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#level1_2">Level One</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-user"></i> 员工管理 <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="general_elements.html">General Elements</a></li>
-                            <li><a href="media_gallery.html">Media Gallery</a></li>
-                            <li><a href="typography.html">Typography</a></li>
-                            <li><a href="icons.html">Icons</a></li>
-                            <li><a href="glyphicons.html">Glyphicons</a></li>
-                            <li><a href="widgets.html">Widgets</a></li>
-                            <li><a href="invoice.html">Invoice</a></li>
-                            <li><a href="inbox.html">Inbox</a></li>
-                            <li><a href="calendar.html">Calendar</a></li>
-                        </ul>
+                    <li th:each="menu : ${#session.getAttribute('menus')}">
+                        <a>
+                            <i th:class="${menu.icon}"></i>
+                            <span th:text="${menu.name}"></span>
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <div th:unless="${#lists.isEmpty(menu.children)}" th:replace="/common/tree::menuTree(nextIter = ${menu.children})"></div>
                     </li>
                 </ul>
             </div>
