@@ -3,7 +3,7 @@ package com.shoulder.model;
 public class UserDept {
     private Integer id;
     private Integer uid;
-    private Long deptId;
+    private Integer deptId;
 
     @Override
     public String toString() {
@@ -30,11 +30,11 @@ public class UserDept {
         this.uid = uid;
     }
 
-    public Long getDeptId() {
+    public Integer getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(Long deptId) {
+    public void setDeptId(Integer deptId) {
         this.deptId = deptId;
     }
 }

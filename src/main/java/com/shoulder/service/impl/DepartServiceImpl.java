@@ -1,7 +1,7 @@
 package com.shoulder.service.impl;
 
 import com.shoulder.mapper.DepartMapper;
-import com.shoulder.model.department;
+import com.shoulder.model.Department;
 import com.shoulder.service.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class DepartServiceImpl implements DepartService {
     DepartMapper departMapper;
 
     @Override
-    public List<department> getAll() throws Exception {
+    public List<Department> getAll() throws Exception {
         return departMapper.findAll();
     }
 }

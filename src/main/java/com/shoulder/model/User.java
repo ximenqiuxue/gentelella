@@ -1,15 +1,18 @@
 package com.shoulder.model;
 
+import java.util.List;
+
 public class User {
     private Integer id;
     private String username;
     private String password;
-    private Boolean rememberMe = false;
     private String email;
     private String gender;
     private String telephone;
     private String salt;
     private String createTime;
+    private Department dept;
+    private Role role;
 
     @Override
     public String toString() {
@@ -17,12 +20,13 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", rememberMe=" + rememberMe +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", salt='" + salt + '\'' +
                 ", createTime='" + createTime + '\'' +
+                ", dept=" + dept +
+                ", role=" + role +
                 '}';
     }
 
@@ -48,14 +52,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Boolean getRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(Boolean rememberMe) {
-        this.rememberMe = rememberMe;
     }
 
     public String getEmail() {
@@ -96,5 +92,21 @@ public class User {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public Department getDept() {
+        return dept;
+    }
+
+    public void setDept(Department dept) {
+        this.dept = dept;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

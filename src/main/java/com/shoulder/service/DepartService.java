@@ -1,9 +1,9 @@
 package com.shoulder.service;
 
-import com.shoulder.model.department;
+import com.shoulder.model.Department;
 
 import java.util.List;
 
 public interface DepartService {
-    List<department> getAll() throws Exception;
+    List<Department> getAll() throws Exception;
 }

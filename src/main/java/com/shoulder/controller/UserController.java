@@ -2,7 +2,7 @@ package com.shoulder.controller;
 
 import com.shoulder.model.Role;
 import com.shoulder.model.User;
-import com.shoulder.model.department;
+import com.shoulder.model.Department;
 import com.shoulder.service.DepartService;
 import com.shoulder.service.RoleService;
 import com.shoulder.service.UserService;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.websocket.server.PathParam;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +29,8 @@ public class UserController {
 
     @RequestMapping(value = "/index")
     public String userIndex(Model model) throws Exception {
-        List<Map<String, Object>> userList = userService.findEntity();
-        model.addAttribute("users", userList);
+        List<User> users = userService.findEntity();
+        model.addAttribute("users", users);
         return "user/list";
     }
 
@@ -39,7 +38,7 @@ public class UserController {
     public String toEdit(@PathParam("id") Integer id, Model model) throws Exception {
         Map<String, Object> user = userService.findUserById(id);
         List<Role> roles = roleService.getAll();
-        List<department> departments = departService.getAll();
+        List<Department> departments = departService.getAll();
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         model.addAttribute("departments", departments);

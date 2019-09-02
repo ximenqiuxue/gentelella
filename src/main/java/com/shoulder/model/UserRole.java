@@ -1,11 +1,11 @@
 package com.shoulder.model;
 
 public class UserRole {
-    private Long id;
+    private Integer id;
 
-    private Long uid;
+    private Integer uid;
 
-    private Long rid;
+    private Integer rid;
 
     @Override
     public String toString() {
@@ -16,27 +16,27 @@ public class UserRole {
                 '}';
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
-    public Long getRid() {
+    public Integer getRid() {
         return rid;
     }
 
-    public void setRid(Long rid) {
+    public void setRid(Integer rid) {
         this.rid = rid;
     }
 }

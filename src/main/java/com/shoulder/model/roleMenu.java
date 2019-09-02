@@ -3,7 +3,7 @@ package com.shoulder.model;
 public class roleMenu {
     private Integer id;
     private Integer rid;
-    private Long mid;
+    private Integer mid;
 
     @Override
     public String toString() {
@@ -30,11 +30,11 @@ public class roleMenu {
         this.rid = rid;
     }
 
-    public Long getMid() {
+    public Integer getMid() {
         return mid;
     }
 
-    public void setMid(Long mid) {
+    public void setMid(Integer mid) {
         this.mid = mid;
     }
 }

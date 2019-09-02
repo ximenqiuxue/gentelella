@@ -24,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> getAll() throws Exception {
         List<Menu> menus = new ArrayList<>();
         List<Menu> menuData = menuMapper.findAll();
-        Map<Long, Menu> menuMap = new HashMap<Long, Menu>();
+        Map<Integer, Menu> menuMap = new HashMap<Integer, Menu>();
         for (Menu m : menuData) {
             menuMap.put(m.getId(), m);
         }

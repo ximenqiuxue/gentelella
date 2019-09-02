@@ -162,6 +162,7 @@
       <version>1.7.25</version>
       <scope>test</scope>
     </dependency>
+    <!-- log4j end -->
 
     <!-- jstl -->
     <dependency>

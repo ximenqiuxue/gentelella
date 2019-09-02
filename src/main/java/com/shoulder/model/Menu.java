@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private Long id;
+    private Integer id;
     private String name;
     private String url;
     private String icon;
-    private Long pid;
+    private Integer pid;
     private List<Menu> children = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "menu{" +
+        return "Menu{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
@@ -23,11 +23,11 @@ public class Menu {
                 '}';
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,11 +55,11 @@ public class Menu {
         this.icon = icon;
     }
 
-    public Long getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(Long pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 

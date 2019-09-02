@@ -1,10 +1,10 @@
 package com.shoulder.model;
 
-public class department {
-    private Long id;
+public class Department {
+    private Integer id;
     private String name;
     private String desc;
-    private Long pid;
+    private Integer pid;
 
     @Override
     public String toString() {
@@ -16,11 +16,11 @@ public class department {
                 '}';
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,11 +40,11 @@ public class department {
         this.desc = desc;
     }
 
-    public Long getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(Long pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 }
