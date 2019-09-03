@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="col-sm-7" style="float:right;" th:fragment="page(pageInfo)">
+    <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+        <ul class="pagination">
+            <li th:if="${pageInfo.hasPreviousPage}" class="paginate_button previous" id="datatable_previous">
+                <a href="#" th:onclick="'javascript:changePage(\''+${pageInfo.prePage}+'\');'" aria-controls="datatable" data-dt-idx="0" tabindex="0"><i class="fa fa-backward"></i></a>
+            </li>
+
+            <th:block th:each="pageIndex : ${pageInfo.navigatepageNums}">
+                <li th:class="${pageIndex == pageInfo.pageNum} ? 'active' : ''" class="paginate_button">
+                    <a href="#" th:onclick="'javascript:changePage(\''+${pageIndex}+'\');'" th:text="${pageIndex}" aria-controls="datatable" data-dt-idx="1" tabindex="0"></a>
+                </li>
+            </th:block>
+
+            <li th:if="${pageInfo.hasNextPage}" class="paginate_button next" id="datatable_next">
+                <a href="#" th:onclick="'javascript:changePage(\''+${pageInfo.nextPage}+'\');'" aria-controls="datatable" data-dt-idx="7" tabindex="0"><i class="fa fa-forward"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

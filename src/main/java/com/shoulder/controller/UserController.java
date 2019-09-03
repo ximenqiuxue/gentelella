@@ -1,24 +1,31 @@
 package com.shoulder.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.shoulder.constants.PageConst;
 import com.shoulder.model.Role;
 import com.shoulder.model.User;
 import com.shoulder.model.Department;
 import com.shoulder.service.DepartService;
 import com.shoulder.service.RoleService;
 import com.shoulder.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -28,9 +35,11 @@ public class UserController {
     private DepartService departService;
 
     @RequestMapping(value = "/index")
-    public String userIndex(Model model) throws Exception {
-        List<User> users = userService.findEntity();
+    public String userIndex(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, Model model) throws Exception {
+        PageInfo<User> pageInfo = userService.findEntity(pageIndex, PageConst.PAGESIZE);
+        List<User> users = pageInfo.getList();
         model.addAttribute("users", users);
+        model.addAttribute("pageInfo", pageInfo);
         return "user/list";
     }
 

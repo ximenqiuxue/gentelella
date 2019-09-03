@@ -136,6 +136,14 @@
       <version>1.0</version>
     </dependency>
 
+    <!-- mybatis pagehelper -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.10</version>
+    </dependency>
+
+
     <!-- 添加fastJson -->
     <dependency>
       <groupId>com.alibaba</groupId>
