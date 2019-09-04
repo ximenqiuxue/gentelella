@@ -35,12 +35,20 @@ public class UserController {
     private DepartService departService;
 
     @RequestMapping(value = "/index")
-    public String userIndex(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, Model model) throws Exception {
-        PageInfo<User> pageInfo = userService.findEntity(pageIndex, PageConst.PAGESIZE);
-        List<User> users = pageInfo.getList();
-        model.addAttribute("users", users);
-        model.addAttribute("pageInfo", pageInfo);
-        return "user/list";
+    public String toIndex() {
+        return "user/index";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/list")
+    public Map userIndex(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, Model model) throws Exception {
+        //PageInfo<User> pageInfo = userService.findEntity(pageIndex, PageConst.PAGESIZE);
+        List<User> users = userService.findEntity(pageIndex, PageConst.PAGESIZE);
+        /*model.addAttribute("users", users);
+        model.addAttribute("pageInfo", pageInfo);*/
+        Map map = new HashMap();
+        map.put("data",users);
+        return map;
     }
 
     @RequestMapping(value = "/toUpdateUser")

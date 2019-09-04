@@ -17,8 +17,7 @@
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all"
-          th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
     <!-- Custom Theme Style -->
@@ -66,10 +65,10 @@
                         </div>
                         <div class="x_content">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table id="userTable" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>序号</th>
+                                        <!--<th>序号</th>-->
                                         <th>用户名</th>
                                         <th>邮箱</th>
                                         <th>性别</th>
@@ -80,7 +79,7 @@
                                         <th>操作</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <!--<tbody>
                                     <tr th:each="user,iterStat:${users}">
                                         <td th:text="${(iterStat.count)+(pageInfo.prePage)*(pageInfo.pageSize)}"></td>
                                         <td th:text="${user.username}"></td>
@@ -98,9 +97,9 @@
                                                     class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-                                    </tbody>
+                                    </tbody>-->
                                 </table>
-                                <div th:replace="/common/page::page(pageInfo = ${pageInfo})"></div>
+                                <!--<div th:replace="/common/page::page(pageInfo = ${pageInfo})"></div>-->
                             </div>
                         </div>
                     </div>
@@ -123,16 +122,33 @@
 <script type="text/javascript" th:src="@{/static/js/common/fastclick.js}"></script>
 <!-- NProgress -->
 <script type="text/javascript" th:src="@{/static/js/common/nprogress.js}"></script>
+
+<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/common/custom.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    $(function () {
-        $("#userId").DataTable()
-        console.log("大圣归来")
-    });
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
+    $(function () {
+        var table = $('#userTable').dataTable( {
+            "ajax": BASE + "user/list.do",
+            "columns": [
+                { "data": "username" },
+                { "data": "email" },
+                { "data": "gender" },
+                { "data": "telephone" },
+                { "data": "dept.name" },
+                { "data": "role.name" },
+                { "data": "createTime" }
+            ],
+            "language": {
+                "url": BASE + "/static/js/datatables/Chinese.json"
+            }
+        } );
+        console.log("大圣归来")
+    });
     function changePage(pageIndex) {
         window.location.href = BASE + "user/index.do?pageIndex=" + pageIndex;
     }

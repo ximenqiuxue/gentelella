@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UserService {
 
-    PageInfo<User> findEntity(Integer pageIndex, Integer pageSize) throws Exception;
+    List<User> findEntity(Integer pageIndex, Integer pageSize) throws Exception;
 
     Map<String, Object> findUserById(Integer id) throws Exception;
 
