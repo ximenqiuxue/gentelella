@@ -166,8 +166,8 @@
                         var context =
                             {
                                 func: [
-                                    {"icon": "edit", "fn": "edit(\'" + c.id + "\')", "type": "success"},
-                                    {"icon": "trash", "fn": "del(\'" + c.id + "\')", "type": "dark"}
+                                    {"icon": "edit", "fn": "editUser(\'" + c.id + "\')", "type": "success"},
+                                    {"icon": "trash", "fn": "delUser(\'" + c.id + "\')", "type": "dark"}
                                 ]
                             };
                         var html = template(context);
@@ -177,18 +177,17 @@
 
             ]
         } );
-        console.log("大圣归来");
     });
 
     function changePage(pageIndex) {
         window.location.href = BASE + "user/index.do?pageIndex=" + pageIndex;
     }
 
-    function edit(id) {
+    function editUser(id) {
         console.log("editButton" + id);
     }
 
-    function del(id) {
+    function delUser(id) {
         console.log("delButton" + id);
     }
 </script>
