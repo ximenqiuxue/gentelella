@@ -93,8 +93,8 @@
                                             <a type="button" class="btn btn-success btn-xs"
                                                th:href="@{/user/toUpdateUser.do(id=${user.id})}"><i
                                                     class="fa fa-edit"></i></a>
-                                            <button type="button" class="btn btn-dark btn-xs"><i
-                                                    class="fa fa-trash"></i></button>
+                                            <button type="button" class="btn btn-dark btn-xs"><i class="fa fa-trash"></i></button>
+
                                         </td>
                                     </tr>
                                     </tbody>-->
@@ -125,16 +125,29 @@
 
 <script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
 
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<!--添加读取json体的handlebars模板引擎-->
+<script type="text/javascript" th:src="@{/static/js/common/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/common/custom.min.js}"></script>
+<!--使用handlebars创建模板-->
+<script type="text/template" id="operateRow">
+    {{#each func}}
+    <button type="button" class="btn btn-{{this.type}} btn-xs" onclick="{{this.fn}}"><i class="fa fa-{{icon}}"></i></button>
+    {{/each}}
+</script>
+
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
     $(function () {
-        var table = $('#userTable').dataTable( {
-            "ajax": BASE + "user/list.do",
-            "columns": [
+        var operateRow = $("#operateRow").html();
+        //预编译模板
+        var template = Handlebars.compile(operateRow);
+        var table = $('#userTable').DataTable( {
+            ajax: BASE + "user/list.do",
+            columns: [
                 { "data": "username" },
                 { "data": "email" },
                 { "data": "gender" },
@@ -143,14 +156,40 @@
                 { "data": "role.name" },
                 { "data": "createTime" }
             ],
-            "language": {
+            language: {
                 "url": BASE + "/static/js/datatables/Chinese.json"
-            }
+            },
+            columnDefs: [
+                {
+                    targets: 7,
+                    render: function (a, b, c, d) {
+                        var context =
+                            {
+                                func: [
+                                    {"icon": "edit", "fn": "edit(\'" + c.id + "\')", "type": "success"},
+                                    {"icon": "trash", "fn": "del(\'" + c.id + "\')", "type": "dark"}
+                                ]
+                            };
+                        var html = template(context);
+                        return html;
+                    }
+                }
+
+            ]
         } );
-        console.log("大圣归来")
+        console.log("大圣归来");
     });
+
     function changePage(pageIndex) {
         window.location.href = BASE + "user/index.do?pageIndex=" + pageIndex;
+    }
+
+    function edit(id) {
+        console.log("editButton" + id);
+    }
+
+    function del(id) {
+        console.log("delButton" + id);
     }
 </script>
 </body>

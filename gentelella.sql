@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `department` (
                                             CONSTRAINT `department_department__fk` FOREIGN KEY (`pid`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
 
--- Dumping data for table gentelella.department: ~2 rows (大约)
+-- Dumping data for table gentelella.department: ~10 rows (大约)
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
 INSERT INTO `department` (`id`, `name`, `desc`, `pid`) VALUES
 (1, '综合部', '综合管理', NULL),
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
                                       CONSTRAINT `menu_menu__fk` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
--- Dumping data for table gentelella.menu: ~15 rows (大约)
+-- Dumping data for table gentelella.menu: ~16 rows (大约)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id`, `name`, `url`, `icon`, `pid`) VALUES
 (1, '主页', NULL, 'fa fa-home', NULL),
@@ -186,11 +186,64 @@ CREATE TABLE IF NOT EXISTS `user` (
                                       PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
--- Dumping data for table gentelella.user: ~0 rows (大约)
+-- Dumping data for table gentelella.user: ~55 rows (大约)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `gender`, `telephone`, `salt`, `create_time`) VALUES
 (1, 'ximen', 'a7d59dfc5332749cb801f86a24f5f590', '1403473722@qq.com', 'male', '18503817798', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-08-24 10:25'),
-(2, 'dongsheng', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25');
+(2, 'dongsheng', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(3, 'ximen1', 'a7d59dfc5332749cb801f86a24f5f590', '1403473722@qq.com', 'male', '18503817798', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-08-24 10:25'),
+(4, 'ximen2', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(5, 'ximen3', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(6, 'ximen4', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(7, 'ximen5', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(8, 'ximen6', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(9, 'ximen7', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(10, 'ximen8', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(11, 'ximen9', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(12, 'ximen10', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(13, 'ximen11', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(14, 'ximen12', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(15, 'ximen13', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(16, 'ximen14', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(17, 'ximen15', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(18, 'ximen16', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(19, 'ximen17', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(20, 'ximen18', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(21, 'ximen19', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(22, 'ximen20', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(23, 'ximen21', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(24, 'ximen22', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(25, 'ximen23', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(26, 'ximen24', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(27, 'ximen25', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(28, 'ximen26', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(29, 'ximen27', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(30, 'ximen28', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(31, 'ximen29', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(32, 'ximen30', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(33, 'ximen31', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(34, 'ximen32', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(35, 'ximen33', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(36, 'ximen34', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(37, 'ximen35', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(38, 'ximen36', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(39, 'ximen37', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(40, 'ximen38', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(41, 'ximen39', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(42, 'ximen40', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(43, 'ximen41', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(44, 'ximen42', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(45, 'ximen43', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(46, 'ximen44', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(47, 'ximen45', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(48, 'ximen46', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(49, 'ximen47', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(50, 'ximen48', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(51, 'ximen49', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(52, 'ximen50', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(53, 'ximen51', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(54, 'ximen52', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
+(55, 'ximen53', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.user_dept
