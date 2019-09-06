@@ -15,7 +15,7 @@ public interface UserMapper {
      * @return
      * @throws Exception
      */
-    List<Map<String, Object>> findAll() throws Exception;
+    List<Map<String, Object>> findAll(Map map) throws Exception;
 
     /**
      * 用户编辑

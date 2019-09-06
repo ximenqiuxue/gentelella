@@ -46,20 +46,18 @@ public class UserController {
                          @RequestParam(value = "start") String start,
                          @RequestParam(value = "limit") String limit,
                          @RequestParam(value = "order") String order) throws Exception {
-        log.info("pageIndex" + start);
-        log.info("pageSize" + limit);
-        log.info("draw" + draw);
-        log.info("order" + order);
-        String[] arr = order.split(","); // 用,分割
-        for (int i=0; i< arr.length; i++){
-            log.info(i + ":"+arr[i]);
-        }
-        PageInfo<Map> pageInfo = userService.findEntity(Integer.parseInt(start), Integer.parseInt(limit));
-        Map map = new HashMap();
-        map.put("users",pageInfo.getList());
-        map.put("draw",draw);
-        map.put("total",pageInfo.getTotal());
-        return map;
+        Map params = new HashMap();
+        String[] arr = order.split(" "); // 用 分割
+        params.put("start", start);
+        params.put("limit", limit);
+        params.put("orderBy", arr[1]);
+        params.put("upDown", arr[2]);
+        PageInfo<Map> pageInfo = userService.findEntity(params);
+        Map returnMap = new HashMap();
+        returnMap.put("users",pageInfo.getList());
+        returnMap.put("draw",draw);
+        returnMap.put("total",pageInfo.getTotal());
+        return returnMap;
     }
 
     @RequestMapping(value = "/toUpdateUser")
