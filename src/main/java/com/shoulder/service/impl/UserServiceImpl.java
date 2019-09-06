@@ -1,5 +1,6 @@
 package com.shoulder.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shoulder.mapper.UserMapper;
@@ -26,11 +27,11 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> findEntity(Integer pageIndex, Integer pageSize) throws Exception {
-        //PageHelper.startPage(pageIndex,pageSize);// 对后边第一个查询接口进行分页查询
+    public PageInfo<Map> findEntity(Integer pageIndex, Integer pageSize) throws Exception {
+        PageHelper.offsetPage(pageIndex,pageSize);// 对后边第一个查询接口进行分页查询
         List<Map<String, Object>> userList = userMapper.findAll();
         List<User> users = new ArrayList<>();
-        //PageInfo pageInfo = new PageInfo(userList);// 放入原始数据，否则得到的total为当前页查询到的条数或者为0
+        PageInfo pageInfo = new PageInfo(userList);// 放入原始数据，否则得到的total为当前页查询到的条数或者为0
         for (Map<String, Object> u : userList){
             User user = new User();
             Department department = new Department();
@@ -49,9 +50,9 @@ public class UserServiceImpl implements UserService {
             user.setRole(role);
             users.add(user);
         }
-        //pageInfo.setList(users);// 再次放入整型后的数据，并不影响之前查询出的数据统计
-        log.info("pageInfo : " + users);
-        return users;
+        pageInfo.setList(users);// 再次放入整型后的数据，并不影响之前查询出的数据统计
+        log.info("pageInfo : " + userList);
+        return pageInfo;
     }
 
     @Override

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.websocket.server.PathParam;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,13 +42,23 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/list")
-    public Map userIndex(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, Model model) throws Exception {
-        //PageInfo<User> pageInfo = userService.findEntity(pageIndex, PageConst.PAGESIZE);
-        List<User> users = userService.findEntity(pageIndex, PageConst.PAGESIZE);
-        /*model.addAttribute("users", users);
-        model.addAttribute("pageInfo", pageInfo);*/
+    public Map userIndex(@RequestParam(value = "draw") String draw,
+                         @RequestParam(value = "start") String start,
+                         @RequestParam(value = "limit") String limit,
+                         @RequestParam(value = "order") String order) throws Exception {
+        log.info("pageIndex" + start);
+        log.info("pageSize" + limit);
+        log.info("draw" + draw);
+        log.info("order" + order);
+        String[] arr = order.split(","); // 用,分割
+        for (int i=0; i< arr.length; i++){
+            log.info(i + ":"+arr[i]);
+        }
+        PageInfo<Map> pageInfo = userService.findEntity(Integer.parseInt(start), Integer.parseInt(limit));
         Map map = new HashMap();
-        map.put("data",users);
+        map.put("users",pageInfo.getList());
+        map.put("draw",draw);
+        map.put("total",pageInfo.getTotal());
         return map;
     }
 
