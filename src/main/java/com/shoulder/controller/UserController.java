@@ -46,12 +46,11 @@ public class UserController {
                          @RequestParam(value = "start") String start,
                          @RequestParam(value = "limit") String limit,
                          @RequestParam(value = "order") String order) throws Exception {
+        log.info("order"+order);
         Map params = new HashMap();
-        String[] arr = order.split(" "); // 用 分割
         params.put("start", start);
         params.put("limit", limit);
-        params.put("orderBy", arr[1]);
-        params.put("upDown", arr[2]);
+        params.put("orderBy", order);
         PageInfo<Map> pageInfo = userService.findEntity(params);
         Map returnMap = new HashMap();
         returnMap.put("users",pageInfo.getList());

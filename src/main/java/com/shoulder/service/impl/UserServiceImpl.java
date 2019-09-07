@@ -30,9 +30,12 @@ public class UserServiceImpl implements UserService {
     public PageInfo<Map> findEntity(Map map) throws Exception {
         Integer start = Integer.parseInt(String.valueOf(map.get("start")));
         Integer limit = Integer.parseInt(String.valueOf(map.get("limit")));
+        String orderBy = String.valueOf(map.get("orderBy"));
+        log.info(orderBy);
+        Integer pageNum = (start/limit) +1;
         // 对后边第一个查询接口进行分页查询
-        PageHelper.offsetPage(start,limit);
-        List<Map<String, Object>> userList = userMapper.findAll(map);
+        PageHelper.startPage(pageNum,limit,orderBy);
+        List<Map<String, Object>> userList = userMapper.findAll();
         List<User> users = new ArrayList<>();
         // 放入原始数据，否则得到的total为当前页查询到的条数或者为0
         PageInfo pageInfo = new PageInfo(userList);

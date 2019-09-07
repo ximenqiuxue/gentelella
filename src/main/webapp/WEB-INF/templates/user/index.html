@@ -136,7 +136,7 @@
             "destroy": true,
             "paging": true, //开启分页
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
-            "order": [ [5, "desc"] ],//默认排序
+            "order": [ [5, "asc"] ],//默认排序
             "searching": false,
             "serverSide": true,
             "ajax":function(data,callback,settings) {
@@ -152,7 +152,7 @@
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
                 //多排序条件
-                param.order = " ";
+                param.order = "";
                 if(data.order) {
                     $.each(data.order,function(index,value){
                         var col = data.order[index].column;
@@ -261,7 +261,7 @@
 
             ],
             /*sPaginationType: 'ellipses'*/
-        }).api();
+        });
     });
 
 

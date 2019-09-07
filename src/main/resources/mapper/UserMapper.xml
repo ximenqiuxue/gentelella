@@ -9,7 +9,6 @@
         LEFT JOIN department d ON ud.dept_id = d.id
         LEFT JOIN user_role ur ON u.id = ur.uid
         LEFT JOIN role r ON r.id = ur.rid
-        order by #{orderBy} #{upDown}
     </select>
 
     <select id="findEntityById" parameterType="Integer" resultType="java.util.Map">
