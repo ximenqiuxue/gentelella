@@ -68,10 +68,11 @@
                         </div>
                         <div class="x_content">
                             <div class="table-responsive">
-                                <table id="userTable" class="table table-striped table-bordered">
+                                <table id="userTable" class="table table-striped _icheck">
                                     <thead>
                                         <tr>
-                                            <th><label><input type="checkbox" class="flat"></label></th>
+                                            <td>序号</td>
+                                            <th></th>
                                             <th>用户名</th>
                                             <th>邮箱</th>
                                             <th>性别</th>
@@ -107,6 +108,7 @@
 <script type="text/javascript" th:src="@{/static/js/common/nprogress.js}"></script>
 
 <script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
 
 <script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/common/icheck.min.js}"></script>
@@ -134,9 +136,9 @@
         var table = $('#userTable').DataTable({
             "processing": true, //刷新的对话框
             "destroy": true,
-            "paging": true, //开启分页
+            "pagingType": "simple_numbers", //开启分页
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
-            "order": [ [5, "asc"] ],//默认排序
+            "order": [ [6, "asc"] ],//默认排序
             "searching": false,
             "serverSide": true,
             "ajax":function(data,callback,settings) {
@@ -187,64 +189,82 @@
             "language": {
                 "url": BASE + "/static/js/datatables/Chinese.json"
             },
+            "select": {
+                style:    'os',
+                selector: 'td:first-child'
+            },
             "columnDefs": [
                 {
-                    "width":"20px",
                     "data":null,
                     "targets":[0],
                     "orderable":false,
-                    "render": function(data, type, row, meta) {
-                        return '<label><input type="checkbox" class="flat" value="' + row.id + '" />';
+                    render:function(data,type,row,meta) {
+                        return meta.row + 1 + meta.settings._iDisplayStart;
                     },
+                    "className": 'text-center whiteSpace'
+                },
+                {
+                    "data":null,
+                    "targets":[1],
+                    "orderable":false,
+                    render:function(data,type,row,meta) {
+                        return '<input type="checkbox" id="check-all" class="flat">';
+                    },
+                    "className": 'text-center whiteSpace'
                 },
                {
-                    "name":"1_username",
+                    "name":"2_username",
                     "data":"username",
-                    "targets":[1],
-                    "orderable":false
+                    "targets":[2],
+                    "orderable":false,
+                   "className": 'text-center whiteSpace'
                 },
                 {
-                   "name":"2_email",
+                   "name":"3_email",
                    "data":"email",
-                   "targets":[2],
-                   "orderable":false
+                   "targets":[3],
+                   "orderable":false,
+                    "className": 'text-center whiteSpace'
                },
                 {
-                    "name":"2_gender",
+                    "name":"4_gender",
                     "data":"gender",
-                    "targets":[3],
+                    "targets":[4],
                     "render":function(data) {
                         return data == 'male' ? "男":"女";
-                    }
+                    },
+                    "className": 'text-center whiteSpace'
                 },
                 {
-                    "name":"4_telephone",
+                    "name":"5_telephone",
                     "data":"telephone",
-                    "targets":[4],
-                    "orderable":false
-
+                    "targets":[5],
+                    "orderable":false,
+                    "className": 'text-center whiteSpace'
                 },
                 {
-                    "name":"5_deptName",
+                    "name":"6_deptName",
                     "data":"dept.name",
-                    "targets":[5]
-                },
-                {
-                    "name":"6_roleName",
-                    "data":"role.name",
+                    "defaultContent":"--",
                     "targets":[6],
-                    "orderable":false
-
+                    "className": 'text-center whiteSpace'
                 },
                 {
-                    "name":"6_createTime",
-                    "data":"createTime",
+                    "name":"7_roleName",
+                    "data":"role.name",
                     "targets":[7],
-                    "orderable":false
-
+                    "orderable":false,
+                    "className": 'text-center whiteSpace'
                 },
                 {
-                    "targets": [8],
+                    "name":"8_createTime",
+                    "data":"createTime",
+                    "targets":[8],
+                    "orderable":false,
+                    "className": 'text-center whiteSpace'
+                },
+                {
+                    "targets": [9],
                     "orderable":false,
                     render: function (data, type, row, meta) {
                         var context =
@@ -256,12 +276,14 @@
                             };
                         var html = template(context);
                         return html;
-                    }
+                    },
+                    "className": 'text-center whiteSpace'
                 }
 
             ],
             /*sPaginationType: 'ellipses'*/
         });
+
     });
 
 

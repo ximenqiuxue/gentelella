@@ -43,8 +43,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/list")
     public Map userIndex(@RequestParam(value = "draw") String draw,
-                         @RequestParam(value = "start") String start,
-                         @RequestParam(value = "limit") String limit,
+                         @RequestParam(value = "start", defaultValue = "0") String start,
+                         @RequestParam(value = "limit", defaultValue = "10") String limit,
                          @RequestParam(value = "order") String order) throws Exception {
         log.info("order"+order);
         Map params = new HashMap();
