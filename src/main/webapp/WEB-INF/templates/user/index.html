@@ -17,12 +17,13 @@
     <!--iCheck -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/green.css}">
     <!-- Datatables -->
+    <!--<link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/jquery.dataTables.min.css}">-->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all"
-          th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/select.dataTables.min.css}">
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/custom.min.css}">
 </head>
@@ -40,53 +41,31 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>用户信息</h3>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>用户信息</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <button type="button" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新增</button>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div class="table-responsive">
-                                <table id="userTable" class="table table-striped _icheck">
-                                    <thead>
-                                        <tr>
-                                            <td>序号</td>
-                                            <th></th>
-                                            <th>用户名</th>
-                                            <th>邮箱</th>
-                                            <th>性别</th>
-                                            <th>电话</th>
-                                            <th>部门</th>
-                                            <th>角色</th>
-                                            <th>创建时间</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                <div class="x_content">
+                    <table id="userTable" class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>性别</th>
+                            <th>电话</th>
+                            <th>部门</th>
+                            <th>角色</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -106,13 +85,25 @@
 <script type="text/javascript" th:src="@{/static/js/common/fastclick.js}"></script>
 <!-- NProgress -->
 <script type="text/javascript" th:src="@{/static/js/common/nprogress.js}"></script>
-
-<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
-
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<!-- iCheck -->
 <script type="text/javascript" th:src="@{/static/js/common/icheck.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/common/ellipses.js}"></script>
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/jszip.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
 <!--添加读取json体的handlebars模板引擎-->
 <script type="text/javascript" th:src="@{/static/js/common/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
@@ -129,17 +120,31 @@
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
-    $(function () {
+    $(document).ready(function() {
         var operateRow = $("#operateRow").html();
         //预编译模板
         var template = Handlebars.compile(operateRow);
-        var table = $('#userTable').DataTable({
-            "processing": true, //刷新的对话框
+        var table = $("#userTable").DataTable({
             "destroy": true,
-            "pagingType": "simple_numbers", //开启分页
+            "processing": true,
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
-            "order": [ [6, "asc"] ],//默认排序
             "searching": false,
+            "oLanguage": {
+                "sProcessing": "正在加载中......",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，查询不到相关数据！",
+                "sEmptyTable": "无数据",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+                "sSearch": "搜索",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            }, //多语言配置
+            "order": [ [5, "asc"] ],//默认排序
             "serverSide": true,
             "ajax":function(data,callback,settings) {
                 //参数封装
@@ -186,86 +191,39 @@
                     },
                 });
             },
-            "language": {
-                "url": BASE + "/static/js/datatables/Chinese.json"
-            },
-            "select": {
-                style:    'os',
-                selector: 'td:first-child'
-            },
-            "columnDefs": [
+            "columns": [
+                /*{ "data": "null", "orderable": false, "className": 'text-center whiteSpace'},*/
+                { "data": "null", "orderable": false, "className": 'text-center whiteSpace'},
+                { "data": "username", "name":"1_username", "orderable": false, "className": 'text-center whiteSpace'},
+                { "data": "email", "name":"2_email", "orderable": false, "className": 'text-center whiteSpace'},
+                { "data": "gender", "name":"3_gender", "className": 'text-center whiteSpace'},
+                { "data": "telephone", "name":"4_telephone", "orderable": false, "className": 'text-center whiteSpace' },
+                { "data": "dept.name", "name":"5_deptName", "className": 'text-center whiteSpace'},
+                { "data": "role.name", "name":"6_roleName", "orderable": false, "className": 'text-center whiteSpace' },
+                { "data": "createTime", "name":"7_createTime", "orderable": false, "className": 'text-center whiteSpace' },
+                { "data": "null", "orderable": false, "className": 'text-center whiteSpace' }
+            ],
+            "columnDefs":[
+                /*{
+                    "targets": [ 0 ],
+                    render:function(data,type,row,meta) {
+                        return '<input type="checkbox"  class="flat" value="' + row.id + '" />';
+                    }
+                },*/
                 {
-                    "data":null,
                     "targets":[0],
-                    "orderable":false,
                     render:function(data,type,row,meta) {
                         return meta.row + 1 + meta.settings._iDisplayStart;
-                    },
-                    "className": 'text-center whiteSpace'
+                    }
                 },
                 {
-                    "data":null,
-                    "targets":[1],
-                    "orderable":false,
-                    render:function(data,type,row,meta) {
-                        return '<input type="checkbox" id="check-all" class="flat">';
-                    },
-                    "className": 'text-center whiteSpace'
-                },
-               {
-                    "name":"2_username",
-                    "data":"username",
-                    "targets":[2],
-                    "orderable":false,
-                   "className": 'text-center whiteSpace'
+                    "targets":[3],
+                    "render": function (data, type, full, meta) {
+                        return data == "male" ? "男" : "女";
+                    }
                 },
                 {
-                   "name":"3_email",
-                   "data":"email",
-                   "targets":[3],
-                   "orderable":false,
-                    "className": 'text-center whiteSpace'
-               },
-                {
-                    "name":"4_gender",
-                    "data":"gender",
-                    "targets":[4],
-                    "render":function(data) {
-                        return data == 'male' ? "男":"女";
-                    },
-                    "className": 'text-center whiteSpace'
-                },
-                {
-                    "name":"5_telephone",
-                    "data":"telephone",
-                    "targets":[5],
-                    "orderable":false,
-                    "className": 'text-center whiteSpace'
-                },
-                {
-                    "name":"6_deptName",
-                    "data":"dept.name",
-                    "defaultContent":"--",
-                    "targets":[6],
-                    "className": 'text-center whiteSpace'
-                },
-                {
-                    "name":"7_roleName",
-                    "data":"role.name",
-                    "targets":[7],
-                    "orderable":false,
-                    "className": 'text-center whiteSpace'
-                },
-                {
-                    "name":"8_createTime",
-                    "data":"createTime",
-                    "targets":[8],
-                    "orderable":false,
-                    "className": 'text-center whiteSpace'
-                },
-                {
-                    "targets": [9],
-                    "orderable":false,
+                    "targets": [ 8 ],
                     render: function (data, type, row, meta) {
                         var context =
                             {
@@ -276,14 +234,22 @@
                             };
                         var html = template(context);
                         return html;
-                    },
-                    "className": 'text-center whiteSpace'
+                    }
                 }
-
             ],
-            /*sPaginationType: 'ellipses'*/
-        });
+            dom: 'Bfrtip',
+            select: true,
+            buttons: [
+                {
+                    text: 'Get selected data',
+                    action: function () {
+                        var count = table.rows( { selected: true } ).count();
 
+                        events.prepend();
+                    }
+                }
+            ]
+        });
     });
 
 
