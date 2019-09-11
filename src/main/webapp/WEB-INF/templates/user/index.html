@@ -51,7 +51,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table id="userTable" class="table table-hover table-bordered">
+                    <table id="userTable" class="table table-striped jambo_table table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -66,6 +66,116 @@
                         </tr>
                         </thead>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Small modal -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">用户详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal form-label-left" th:attr="action=@{/user/updateUser.do}"
+                              novalidate>
+                            <input type="hidden" id="userId" name="id">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">用户名<span
+                                        class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="username" class="form-control col-md-7 col-xs-12"
+                                           name="username" placeholder="Smith" required="required"
+                                           >
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">邮箱<span
+                                        class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="email" id="email" name="email"
+                                           class="form-control col-md-7 col-xs-12" placeholder="Smith@163.com"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">性别<span class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div id="gender" class="btn-group" data-toggle="buttons">
+                                        <span>男</span>
+                                        <input type="radio" class="flat" name="gender" value="male"
+                                               />
+                                        &nbsp;&nbsp;
+                                        <span>女</span>
+                                        <input type="radio" class="flat" name="gender" value="female"
+                                               />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                       for="telephone">联系方式<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="tel" id="telephone" name="telephone"
+                                           class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="11,12" placeholder="18236887931"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                       for="telephone">角色<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="rId" class="form-control" required>
+                                        <!--<option th:selected="${user.rid eq role.id}"
+                                                th:each="role:${roles}"
+                                                th:value="${role.id}"
+                                                th:text="${role.desc}">
+                                        </option>-->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                       for="telephone">部门<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="deptId" class="form-control" required>
+                                        <!--<option th:selected="${user.deptId eq dept.id}"
+                                                th:each="dept:${departments}"
+                                                th:value="${dept.id}"
+                                                th:text="${dept.name}">
+                                        </option>-->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                       for="myDatepicker">创建时间<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="input-group date" id="myDatepicker">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                        <input type="text" class="form-control col-md-7 col-xs-12" name="createTime" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -120,17 +230,19 @@
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
+
+    var table;
     $(document).ready(function() {
         var operateRow = $("#operateRow").html();
         //预编译模板
         var template = Handlebars.compile(operateRow);
-        var table = $("#userTable").DataTable({
+        table = $("#userTable").DataTable({
             "destroy": true,
             "processing": true,
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
             "searching": false,
             "oLanguage": {
-                "sProcessing": "正在加载中......",
+                "sProcessing": "加载中......",
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
                 "sZeroRecords": "对不起，查询不到相关数据！",
                 "sEmptyTable": "无数据",
@@ -198,8 +310,8 @@
                 { "data": "email", "name":"2_email", "orderable": false, "className": 'text-center whiteSpace'},
                 { "data": "gender", "name":"3_gender", "className": 'text-center whiteSpace'},
                 { "data": "telephone", "name":"4_telephone", "orderable": false, "className": 'text-center whiteSpace' },
-                { "data": "dept.name", "name":"5_deptName", "className": 'text-center whiteSpace'},
-                { "data": "role.name", "name":"6_roleName", "orderable": false, "className": 'text-center whiteSpace' },
+                { "data": "dept.name", "name":"5_deptName", "className": 'text-center whiteSpace', "defaultContent":"--"},
+                { "data": "role.name", "name":"6_roleName", "orderable": false, "className": 'text-center whiteSpace', "defaultContent":"--"},
                 { "data": "createTime", "name":"7_createTime", "orderable": false, "className": 'text-center whiteSpace' },
                 { "data": "null", "orderable": false, "className": 'text-center whiteSpace' }
             ],
@@ -228,7 +340,7 @@
                         var context =
                             {
                                 func: [
-                                    {"icon": "edit", "fn": "editUser(\'" + row.id + "\')", "type": "success"},
+                                    {"icon": "edit", "fn": "editUser(\'" + row.username + "\',\'" + row.email + "\',\'" + row.gender + "\',\'" + row.telephone + "\',\'" + row.dept.id + "\',\'" + row.role.id + "\',\'" + row.createTime + "\')", "type": "success"},
                                     {"icon": "trash", "fn": "delUser(\'" + row.id + "\')", "type": "dark"}
                                 ]
                             };
@@ -236,26 +348,28 @@
                         return html;
                     }
                 }
-            ],
-            dom: 'Bfrtip',
-            select: true,
-            buttons: [
-                {
-                    text: 'Get selected data',
-                    action: function () {
-                        var count = table.rows( { selected: true } ).count();
-
-                        events.prepend();
-                    }
-                }
             ]
+        }).draw();
+
+        $('#userTable tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+            /*console.log(table.row(this).data());*/
         });
+
+
     });
 
-
-    function editUser(id) {
-        console.log("editButton" + id);
+    function editUser(username, email, gender, telephone, deptId, roleId, createTime) {
+        /*console.log(username, email, gender, telephone, deptId, roleId, createTime);*/
+        $("#username").val(username);
+        $("#email").val(email);
+        $("#gender").val(gender);
+        $("#telephone").val(telephone);
+        $("#deptId").val(deptId);
+        $("#rId").val(roleId);
+        $("#createTime").val(createTime);
     }
+
 
     function delUser(id) {
         console.log("delButton" + id);
