@@ -15,4 +15,6 @@ public interface UserService {
     User findUserByName(String username);
 
     boolean addOrupdateUser(User user, String deptId, String rId) throws Exception;
+
+    boolean deleteById(Integer userId) throws Exception;
 }

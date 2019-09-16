@@ -49,4 +49,12 @@ public interface UserMapper {
      * @return
      */
     Integer addUser(User user) throws Exception;
+
+    /**
+     * 删除
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    Integer deleteUser(Integer userId) throws Exception;
 }

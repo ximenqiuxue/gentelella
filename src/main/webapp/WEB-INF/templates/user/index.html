@@ -159,7 +159,7 @@
                             <div class="item form-group">
                                 <div class="text-center">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" onclick="save()">保存</button>
+                                    <button type="button" class="btn btn-primary" onclick="save()">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -202,8 +202,7 @@
 <script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
-<!-- jQuery Validate-->
-<!--<script type="text/javascript" th:src="@{/static/js/common/jquery.validate.js}"></script>-->
+<!-- Validate-->
 <script type="text/javascript" th:src="@{/static/js/common/validator.js}"></script>
 <!-- bootstrap-datetimepicker js -->
 <script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.min.js}"></script>
@@ -228,9 +227,9 @@
     layui.use('layer', function () {
         layer = layui.layer;
     });
-    /*刷新框*/
+    //刷新
     var loadingIndex = null;
-    /*编辑或新增*/
+    //编辑或新增
     var addOrEdit = true;
 
     $(document).ready(function() {
@@ -242,7 +241,7 @@
             "processing": false,
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
             "searching": false,
-            "oLanguage": {
+            "oLanguage": {//多语言配置
                 "sProcessing": "加载中......",
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
                 "sZeroRecords": "对不起，查询不到相关数据！",
@@ -256,14 +255,12 @@
                     "sNext": "下一页",
                     "sLast": "末页"
                 }
-            }, //多语言配置
+            },
             "order": [ [5, "asc"] ],//默认排序
             "serverSide": true,
             "ajax":function(data,callback,settings) {
-                //参数封装
-                var param = {};
-                //删除多余请求参数
-                for (var key in data) {
+                var param = {};//参数封装
+                for (var key in data) {//删除多余请求参数
                     if (key.indexOf("search") == 0) { //以search开头的参数删除
                         delete data[key];
                     }
@@ -271,8 +268,7 @@
                 param.draw = data.draw;
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
-                //多排序条件
-                param.order = "";
+                param.order = "";//多排序条件
                 if(data.order) {
                     $.each(data.order,function(index,value){
                         var col = data.order[index].column;
@@ -302,14 +298,13 @@
                         returnData.recordsTotal = result.data.total;//返回数据全部记录
                         returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.data.users;//返回的数据列表
-                        //回调函数(数据渲染)
-                        callback(returnData);
+                        callback(returnData);//回调函数(数据渲染)
                         layer.close(loadingIndex);
                     }
                 });
             },
             "columns": [
-                /*{ "data": "null", "orderable": false, "className": 'text-center whiteSpace'},*/
+                //{ "data": "null", "orderable": false, "className": 'text-center whiteSpace'},
                 { "data": "null", "orderable": false, "className": 'text-center whiteSpace'},
                 { "data": "username", "name":"1_username", "orderable": false, "className": 'text-center whiteSpace'},
                 { "data": "email", "name":"2_email", "orderable": false, "className": 'text-center whiteSpace'},
@@ -349,86 +344,6 @@
                 }
             ]
         }).draw();
-
-        $.validator.setDefaults({
-            submitHandler: function() {
-                $.ajax({
-                    type:"POST",
-                    url: BASE+"user/saveUser.do",
-                    data: $("#userForm").serialize(),
-                    success:function (result) {
-                        if (result.code == 100) {
-                            /*关闭modal框*/
-                            $("#userEditModal").modal('hide');
-                            /*重新加载表格*/
-                            table.ajax.reload();
-                            if (addOrEdit) {
-                                layer.msg("新增成功", {time: 4000, icon: 1}, function () {});
-                            }else {
-                                /*提示信息*/
-                                layer.msg("编辑完成", {time: 4000, icon: 1}, function () {});
-                            }
-                        }else {
-                            if (addOrEdit) {
-                                layer.msg("新增异常", {time: 4000, icon: 5, shift: 6}, function () {});
-                            }else {
-                                layer.msg("编辑异常"+result.msg, {time: 4000, icon: 5, shift: 6}, function () {});
-                            }
-                        }
-                    }
-                })
-            }
-        });
-
-
-
-        $("#userForm").validate({
-            rules: {
-                username: {
-                    required: true,
-                    minlength: 2
-                },
-                gender: {
-                    required: true
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                telephone: {
-                    required: true
-                },
-                createTime: {
-                    required: true
-                }
-            },
-            messages: {
-                username: {
-                    required: "输入用户名",
-                    minlength: "Your username must consist of at least 2 characters"
-                },
-                gender: {
-                    required: "指定性别"
-                },
-                email: "输入有效的邮箱地址",
-                telephone: "输入有效的联系方式",
-                createTime: "输入设立时间"
-            },
-            errorElement: "em",
-            errorPlacement: function ( error, element ) {
-                // Add the `help-block` class to the error element
-                error.addClass( "help-block" );
-
-                if ( element.prop( "type" ) === "checkbox") {
-                    error.insertAfter( element.parent( "label" ) );
-                } else {
-                    error.insertAfter( element );
-                }
-                if (element.parent().hasClass('date')) {
-                    error.insertAfter(element.parent());
-                }
-            }
-        });
     });
 
     function initTimePicker() {
@@ -465,7 +380,7 @@
                 $("#gender").empty();
                 $("#rId").empty();
                 $("#deptId").empty();
-                /*加载raido*/
+                //加载raido
                 if (user.gender == "male"){
                     $("#gender").append("<span>男</span>\n" +
                         "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\" checked/>\n" +
@@ -479,7 +394,7 @@
                         "<span>女</span>\n" +
                         "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>")
                 }
-                /*加载角色*/
+                //加载角色
                 for (var i = 0; i < roles.length; i++) {
                     if (user.rid == roles[i].id){
                         $("#rId").append("<option selected value='"+roles[i].id+"'>" + roles[i].name + "</option>");
@@ -487,7 +402,7 @@
                         $("#rId").append("<option value='"+roles[i].id+"'>" + roles[i].name + "</option>");
                     }
                 }
-                /*加载部门*/
+                //加载部门
                 for (var i = 0; i < depts.length; i++) {
                     if(user.deptId == depts[i].id){
                         $("#deptId").append("<option selected value='"+depts[i].id+"'>" + depts[i].name + "</option>");
@@ -495,19 +410,18 @@
                         $("#deptId").append("<option value='"+depts[i].id+"'>" + depts[i].name + "</option>");
                     }
                 }
-                /*关闭刷新框*/
+                //关闭刷新框
                 layer.close(loadingIndex);
             }
         })
-
     }
 
     function addUser() {
         addOrEdit = true;
-        document.getElementById("userForm").reset();
+        document.getElementById("userForm").reset();//jquery 并没有此方法
+        $("#userId").val('');
         $.ajax({
             url: BASE + "user/toAddOrUpdate.do",
-            data: {id: null},
             dataType: "json",
             beforeSend : function(){
                 loadingIndex = layer.msg('处理中', {icon: 16});
@@ -519,30 +433,74 @@
                 $("#gender").empty();
                 $("#rId").empty();
                 $("#deptId").empty();
-                /*加载raido*/
+                //加载raido
                 $("#gender").append("<span>男</span>\n" +
                     "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\"/>\n" +
                     "&nbsp;&nbsp;\n" +
                     "<span>女</span>\n" +
                     "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>");
-                /*加载角色*/
+                //加载角色
                 for (var i = 0; i < roles.length; i++) {
                     $("#rId").append("<option value='"+roles[i].id+"'>" + roles[i].name + "</option>");
                 }
-                /*加载部门*/
+                //加载部门
                 for (var i = 0; i < depts.length; i++) {
                     $("#deptId").append("<option value='"+depts[i].id+"'>" + depts[i].name + "</option>");
                 }
-                /*关闭刷新框*/
+                //关闭刷新框
                 layer.close(loadingIndex);
             }
         })
     }
 
+    function save() {
+        if(validator.checkAll("#userForm")){
+            $.ajax({
+                type:"POST",
+                url: BASE+"user/saveUser.do",
+                data: $("#userForm").serialize(),
+                success:function (result) {
+                    if (result.code == 100) {
+                        //关闭modal框
+                        $("#userEditModal").modal('hide');
+                        //重新加载表格
+                        table.ajax.reload();
+                        if (addOrEdit) {
+                            layer.msg("新增成功", {time: 3000, icon: 1}, function () {});
+                        }else {
+                            //提示信息
+                            layer.msg("编辑完成", {time: 3000, icon: 1}, function () {});
+                        }
+                    }else {
+                        if (addOrEdit) {
+                            layer.msg("新增异常" + result.msg, {time: 3000, icon: 5, shift: 6}, function () {});
+                        }else {
+                            layer.msg("编辑异常" + result.msg, {time: 3000, icon: 5, shift: 6}, function () {});
+                        }
+                    }
+                }
+            })
+        }
+    }
+
 
     function delUser(id) {
-        window.location.reload();
-        console.log("delButton" + id);
+        layer.confirm('确定删除吗？', function (index) {
+            $.ajax({
+                url:BASE+"user/deleteUser.do",
+                data: {id: id},
+                success: function (result) {
+                    if (result.code == 100){
+                        //重新加载表格
+                        table.ajax.reload();
+                        layer.msg("删除成功", {time: 3000, icon: 1}, function () {});
+                    }else {
+                        layer.msg("删除异常" + result.msg, {time: 3000, icon: 5, shift: 6}, function () {});
+                    }
+                }
+            })
+            layer.close(index);
+        });
     }
 </script>
 </body>

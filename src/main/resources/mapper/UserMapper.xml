@@ -21,4 +21,8 @@
     <insert id="addUser" parameterType="com.shoulder.model.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO user (username,email,gender,telephone,create_time) VALUES(#{username},#{email},#{gender},#{telephone},#{createTime})
     </insert>
+
+    <delete id="deleteUser">
+        delete from user where id=#{userId}
+    </delete>
 </mapper>

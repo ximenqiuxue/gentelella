@@ -31,6 +31,13 @@ public class UserServiceImpl implements UserService {
     UserRoleMapper userRoleMapper;
 
     @Override
+    public boolean deleteById(Integer userId) throws Exception {
+        Integer delFlag = userMapper.deleteUser(userId);
+        log.info("delFlag:" + delFlag);
+        return delFlag > 0;
+    }
+
+    @Override
     public boolean addOrupdateUser(User user, String deptId, String rId) throws Exception {
         UserDept userDept = new UserDept();
         userDept.setDeptId(Integer.parseInt(deptId));

@@ -37,7 +37,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
         if(responseBody != null) {
             Map<String, Object> responseMap = new HashMap<String, Object>();
             responseMap.put("code", 0);
-            responseMap.put("message", message);
+            responseMap.put("msg", message);
             String json= JSON.toJSONString(responseMap);
             httpServletResponse.setContentType("UTF-8");
             httpServletResponse.setContentType("application/json;charset=utf-8");
