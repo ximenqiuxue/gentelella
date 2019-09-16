@@ -13,4 +13,6 @@ public interface UserService {
     Map<String, Object> findUserById(Integer id) throws Exception;
 
     User findUserByName(String username);
+
+    boolean addOrupdateUser(User user, String deptId, String rId) throws Exception;
 }

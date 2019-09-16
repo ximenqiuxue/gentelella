@@ -2,6 +2,7 @@ package com.shoulder.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.shoulder.constants.PageConst;
+import com.shoulder.model.Result;
 import com.shoulder.model.Role;
 import com.shoulder.model.User;
 import com.shoulder.model.Department;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -42,37 +44,47 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/list")
-    public Map userIndex(@RequestParam(value = "draw") String draw,
-                         @RequestParam(value = "start", defaultValue = "0") String start,
-                         @RequestParam(value = "limit", defaultValue = "10") String limit,
-                         @RequestParam(value = "order") String order) throws Exception {
-        log.info("order"+order);
+    public Result userIndex(@RequestParam(value = "draw") String draw,
+                            @RequestParam(value = "start", defaultValue = "0") String start,
+                            @RequestParam(value = "limit", defaultValue = "10") String limit,
+                            @RequestParam(value = "order") String order) throws Exception {
         Map params = new HashMap();
         params.put("start", start);
         params.put("limit", limit);
         params.put("orderBy", order);
         PageInfo<Map> pageInfo = userService.findEntity(params);
         Map returnMap = new HashMap();
-        returnMap.put("users",pageInfo.getList());
-        returnMap.put("draw",draw);
-        returnMap.put("total",pageInfo.getTotal());
+        returnMap.put("users", pageInfo.getList());
+        returnMap.put("draw", draw);
+        returnMap.put("total", pageInfo.getTotal());
+        return Result.success(returnMap);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/toAddOrUpdate")
+    public Map toAddOrUpdate(@RequestParam(value = "id", required = false) Integer id) throws Exception {
+        Map returnMap = new HashMap();
+        if (id != null) {
+            Map<String, Object> user = userService.findUserById(id);
+            returnMap.put("user", user);
+        }
+        List<Role> roles = roleService.getAll();
+        List<Department> departments = departService.getAll();
+        returnMap.put("roles", roles);
+        returnMap.put("departments", departments);
         return returnMap;
     }
 
-    @RequestMapping(value = "/toUpdateUser")
-    public String toEdit(@PathParam("id") Integer id, Model model) throws Exception {
-        Map<String, Object> user = userService.findUserById(id);
-        List<Role> roles = roleService.getAll();
-        List<Department> departments = departService.getAll();
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roles);
-        model.addAttribute("departments", departments);
-        return "user/edit";
-    }
-
-    @RequestMapping(value = "/updateUser")
-    public String saveUser(User user) {
-        System.out.println("Param User :" + user);
-        return "redirect:/user/index.do";
+    @ResponseBody
+    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+    public Result saveUser(User user, String deptId, String rId) {
+        log.info("user"+user);
+        boolean returnFlag = false;
+        try {
+            returnFlag = userService.addOrupdateUser(user, deptId, rId);
+            return Result.success();
+        } catch (Exception e) {
+            return Result.failure(e.getMessage());
+        }
     }
 }

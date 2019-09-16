@@ -24,8 +24,22 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/select.dataTables.min.css}">
+    <!-- bootstrap-datetimepicker css -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datepicker/bootstrap-datetimepicker.min.css}">
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/custom.min.css}">
+    <!--layUi js-->
+    <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
+    <style>
+        #userForm {
+            width: 850px;
+        }
+        #userForm label.error {
+            margin-left: 10px;
+            width: auto;
+            display: inline;
+        }
+    </style>
 </head>
 
 <body class="nav-md">
@@ -43,7 +57,7 @@
         <div class="right_col" role="main">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>用户信息</small></h2>
+                    <h2>用户信息</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -51,7 +65,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table id="userTable" class="table table-striped jambo_table table-bordered">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="addUser()"><span>新增</span></button>
+                    <table id="userTable" class="table table-striped table-hover table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -70,51 +85,36 @@
             </div>
         </div>
 
-        <!-- Small modal -->
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- large modal -->
+        <div class="modal fade bs-example-modal-lg" id="userEditModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel2">用户详情</h4>
+                        <h4 class="modal-title">用户详情</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal form-label-left" th:attr="action=@{/user/updateUser.do}"
-                              novalidate>
+                        <form id="userForm" class="form-horizontal form-label-left" novalidate>
                             <input type="hidden" id="userId" name="id">
                             <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">用户名<span
-                                        class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">用户名<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="username" class="form-control col-md-7 col-xs-12"
-                                           name="username" placeholder="Smith" required="required"
-                                           >
+                                    <input type="text" id="username" class="form-control col-md-7 col-xs-12" name="username" placeholder="Smith" required="required">
                                 </div>
                             </div>
                             <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">邮箱<span
-                                        class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">邮箱<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="email" id="email" name="email"
-                                           class="form-control col-md-7 col-xs-12" placeholder="Smith@163.com"
-                                           required="required">
+                                    <input type="email" id="email" name="email" class="form-control col-md-7 col-xs-12" placeholder="Smith@163.com" required="required">
                                 </div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">性别<span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div id="gender" class="btn-group" data-toggle="buttons">
-                                        <span>男</span>
-                                        <input type="radio" class="flat" name="gender" value="male"
-                                               />
-                                        &nbsp;&nbsp;
-                                        <span>女</span>
-                                        <input type="radio" class="flat" name="gender" value="female"
-                                               />
-                                    </div>
+                                    <div id="gender" class="btn-group" data-toggle="buttons"></div>
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -133,13 +133,7 @@
                                        for="telephone">角色<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select name="rId" class="form-control" required>
-                                        <!--<option th:selected="${user.rid eq role.id}"
-                                                th:each="role:${roles}"
-                                                th:value="${role.id}"
-                                                th:text="${role.desc}">
-                                        </option>-->
-                                    </select>
+                                    <select id="rId" name="rId" class="form-control" required></select>
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -147,35 +141,29 @@
                                        for="telephone">部门<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select name="deptId" class="form-control" required>
-                                        <!--<option th:selected="${user.deptId eq dept.id}"
-                                                th:each="dept:${departments}"
-                                                th:value="${dept.id}"
-                                                th:text="${dept.name}">
-                                        </option>-->
-                                    </select>
+                                    <select id="deptId" name="deptId" class="form-control" required></select>
                                 </div>
                             </div>
                             <div class="item form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                       for="myDatepicker">创建时间<span class="required">*</span>
-                                </label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="myDatepicker">创建时间<span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="input-group date" id="myDatepicker">
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                        <input type="text" class="form-control col-md-7 col-xs-12" name="createTime" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        <input id="createTime" type="text" class="form-control col-md-7 col-xs-12" name="createTime" required/>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary" onclick="save()">保存</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -214,16 +202,20 @@
 <script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
+<!-- jQuery Validate-->
+<!--<script type="text/javascript" th:src="@{/static/js/common/jquery.validate.js}"></script>-->
+<script type="text/javascript" th:src="@{/static/js/common/validator.js}"></script>
+<!-- bootstrap-datetimepicker js -->
+<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
 <!--添加读取json体的handlebars模板引擎-->
 <script type="text/javascript" th:src="@{/static/js/common/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/common/custom.min.js}"></script>
 <!--使用handlebars创建模板-->
 <script type="text/template" id="operateRow">
-    {{#each func}}
-    <button type="button" class="btn btn-{{this.type}} btn-xs" onclick="{{this.fn}}"><i class="fa fa-{{icon}}"></i>
-    </button>
-    {{/each}}
+    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="{{editBtn}}"><i class="fa fa-edit"></i></button>
+    <button type="button" class="btn btn-dark btn-xs" onclick="{{deleteBtn}}"><i class="fa fa-trash"></i></button>
 </script>
 
 <script type="text/javascript" th:inline="javascript">
@@ -231,14 +223,23 @@
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
 
-    var table;
+    var table, layer;
+
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    /*刷新框*/
+    var loadingIndex = null;
+    /*编辑或新增*/
+    var addOrEdit = true;
+
     $(document).ready(function() {
         var operateRow = $("#operateRow").html();
         //预编译模板
         var template = Handlebars.compile(operateRow);
         table = $("#userTable").DataTable({
             "destroy": true,
-            "processing": true,
+            "processing": false,
             "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
             "searching": false,
             "oLanguage": {
@@ -266,7 +267,7 @@
                     if (key.indexOf("search") == 0) { //以search开头的参数删除
                         delete data[key];
                     }
-                };
+                }
                 param.draw = data.draw;
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
@@ -292,15 +293,19 @@
                     cache:false,
                     data: param,
                     dataType: "json",
+                    beforeSend : function(){
+                        loadingIndex = layer.msg('处理中', {icon: 16});
+                    },
                     success:function(result){
                         var returnData = {};
-                        returnData.draw = result.draw;
-                        returnData.recordsTotal = result.total;//返回数据全部记录
-                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                        returnData.data = result.users;//返回的数据列表
+                        returnData.draw = result.data.draw;
+                        returnData.recordsTotal = result.data.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data.users;//返回的数据列表
                         //回调函数(数据渲染)
                         callback(returnData);
-                    },
+                        layer.close(loadingIndex);
+                    }
                 });
             },
             "columns": [
@@ -337,13 +342,7 @@
                 {
                     "targets": [ 8 ],
                     render: function (data, type, row, meta) {
-                        var context =
-                            {
-                                func: [
-                                    {"icon": "edit", "fn": "editUser(\'" + row.username + "\',\'" + row.email + "\',\'" + row.gender + "\',\'" + row.telephone + "\',\'" + row.dept.id + "\',\'" + row.role.id + "\',\'" + row.createTime + "\')", "type": "success"},
-                                    {"icon": "trash", "fn": "delUser(\'" + row.id + "\')", "type": "dark"}
-                                ]
-                            };
+                        var context = {"editBtn": "editUser(\'" + row.id + "\')","deleteBtn": "delUser(\'" + row.id + "\')"};
                         var html = template(context);
                         return html;
                     }
@@ -351,27 +350,198 @@
             ]
         }).draw();
 
-        $('#userTable tbody').on( 'click', 'tr', function () {
-            $(this).toggleClass('selected');
-            /*console.log(table.row(this).data());*/
+        $.validator.setDefaults({
+            submitHandler: function() {
+                $.ajax({
+                    type:"POST",
+                    url: BASE+"user/saveUser.do",
+                    data: $("#userForm").serialize(),
+                    success:function (result) {
+                        if (result.code == 100) {
+                            /*关闭modal框*/
+                            $("#userEditModal").modal('hide');
+                            /*重新加载表格*/
+                            table.ajax.reload();
+                            if (addOrEdit) {
+                                layer.msg("新增成功", {time: 4000, icon: 1}, function () {});
+                            }else {
+                                /*提示信息*/
+                                layer.msg("编辑完成", {time: 4000, icon: 1}, function () {});
+                            }
+                        }else {
+                            if (addOrEdit) {
+                                layer.msg("新增异常", {time: 4000, icon: 5, shift: 6}, function () {});
+                            }else {
+                                layer.msg("编辑异常"+result.msg, {time: 4000, icon: 5, shift: 6}, function () {});
+                            }
+                        }
+                    }
+                })
+            }
         });
 
 
+
+        $("#userForm").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                gender: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                telephone: {
+                    required: true
+                },
+                createTime: {
+                    required: true
+                }
+            },
+            messages: {
+                username: {
+                    required: "输入用户名",
+                    minlength: "Your username must consist of at least 2 characters"
+                },
+                gender: {
+                    required: "指定性别"
+                },
+                email: "输入有效的邮箱地址",
+                telephone: "输入有效的联系方式",
+                createTime: "输入设立时间"
+            },
+            errorElement: "em",
+            errorPlacement: function ( error, element ) {
+                // Add the `help-block` class to the error element
+                error.addClass( "help-block" );
+
+                if ( element.prop( "type" ) === "checkbox") {
+                    error.insertAfter( element.parent( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+                if (element.parent().hasClass('date')) {
+                    error.insertAfter(element.parent());
+                }
+            }
+        });
     });
 
-    function editUser(username, email, gender, telephone, deptId, roleId, createTime) {
-        /*console.log(username, email, gender, telephone, deptId, roleId, createTime);*/
-        $("#username").val(username);
-        $("#email").val(email);
-        $("#gender").val(gender);
-        $("#telephone").val(telephone);
-        $("#deptId").val(deptId);
-        $("#rId").val(roleId);
-        $("#createTime").val(createTime);
+    function initTimePicker() {
+        /*加载时间框*/
+        $('#myDatepicker').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language: 'zh-CN',
+            todayBtn: true,
+            startDate: (new Date()).toLocaleDateString(),
+            weekStart: 1,
+        });
+    }
+
+    function editUser(id) {
+        addOrEdit = false;
+        $.ajax({
+            url: BASE + "user/toAddOrUpdate.do",
+            data: {id: id},
+            dataType: "json",
+            beforeSend : function(){
+                loadingIndex = layer.msg('处理中', {icon: 16});
+            },
+            success:function (result) {
+                var user = result.user;
+                var roles = result.roles;
+                var depts = result.departments;
+                $("#userId").val(user.id);
+                $("#username").val(user.username);
+                $("#email").val(user.email);
+                $("#gender").val(user.gender);
+                $("#telephone").val(user.telephone);
+                $("#createTime").val(user.createTime);
+                initTimePicker();
+                $("#gender").empty();
+                $("#rId").empty();
+                $("#deptId").empty();
+                /*加载raido*/
+                if (user.gender == "male"){
+                    $("#gender").append("<span>男</span>\n" +
+                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\" checked/>\n" +
+                        "&nbsp;&nbsp;\n" +
+                        "<span>女</span>\n" +
+                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\"/>")
+                }else {
+                    $("#gender").append("<span>男</span>\n" +
+                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\"/>\n" +
+                        "&nbsp;&nbsp;\n" +
+                        "<span>女</span>\n" +
+                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>")
+                }
+                /*加载角色*/
+                for (var i = 0; i < roles.length; i++) {
+                    if (user.rid == roles[i].id){
+                        $("#rId").append("<option selected value='"+roles[i].id+"'>" + roles[i].name + "</option>");
+                    }else {
+                        $("#rId").append("<option value='"+roles[i].id+"'>" + roles[i].name + "</option>");
+                    }
+                }
+                /*加载部门*/
+                for (var i = 0; i < depts.length; i++) {
+                    if(user.deptId == depts[i].id){
+                        $("#deptId").append("<option selected value='"+depts[i].id+"'>" + depts[i].name + "</option>");
+                    }else {
+                        $("#deptId").append("<option value='"+depts[i].id+"'>" + depts[i].name + "</option>");
+                    }
+                }
+                /*关闭刷新框*/
+                layer.close(loadingIndex);
+            }
+        })
+
+    }
+
+    function addUser() {
+        addOrEdit = true;
+        document.getElementById("userForm").reset();
+        $.ajax({
+            url: BASE + "user/toAddOrUpdate.do",
+            data: {id: null},
+            dataType: "json",
+            beforeSend : function(){
+                loadingIndex = layer.msg('处理中', {icon: 16});
+            },
+            success:function (result) {
+                var roles = result.roles;
+                var depts = result.departments;
+                initTimePicker();
+                $("#gender").empty();
+                $("#rId").empty();
+                $("#deptId").empty();
+                /*加载raido*/
+                $("#gender").append("<span>男</span>\n" +
+                    "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\"/>\n" +
+                    "&nbsp;&nbsp;\n" +
+                    "<span>女</span>\n" +
+                    "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>");
+                /*加载角色*/
+                for (var i = 0; i < roles.length; i++) {
+                    $("#rId").append("<option value='"+roles[i].id+"'>" + roles[i].name + "</option>");
+                }
+                /*加载部门*/
+                for (var i = 0; i < depts.length; i++) {
+                    $("#deptId").append("<option value='"+depts[i].id+"'>" + depts[i].name + "</option>");
+                }
+                /*关闭刷新框*/
+                layer.close(loadingIndex);
+            }
+        })
     }
 
 
     function delUser(id) {
+        window.location.reload();
         console.log("delButton" + id);
     }
 </script>

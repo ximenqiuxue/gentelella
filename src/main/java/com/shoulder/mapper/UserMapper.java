@@ -1,7 +1,9 @@
 package com.shoulder.mapper;
 
 import com.shoulder.model.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -18,12 +20,20 @@ public interface UserMapper {
     List<Map<String, Object>> findAll() throws Exception;
 
     /**
-     * 用户编辑
+     * 查询
      * @param id
      * @return
      * @throws Exception
      */
     Map<String, Object> findEntityById(Integer id) throws Exception;
+
+    /**
+     * 编辑
+     * @param user
+     * @return
+     */
+    @Update("UPDATE user SET username=#{username}, email=#{email}, gender=#{gender}, telephone=#{telephone}, create_time=#{createTime} WHERE id=#{id};")
+    Integer updateUserByEntity(User user) throws Exception;
 
     /**
      * shiro认证
@@ -32,4 +42,11 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM user WHERE username =#{username};")
     User findEntityByName(String username);
+
+    /**
+     * 新增
+     * @param user
+     * @return
+     */
+    Integer addUser(User user) throws Exception;
 }

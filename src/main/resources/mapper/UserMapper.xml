@@ -17,4 +17,8 @@
         LEFT JOIN user_dept ud ON u.id = ud.uid
         WHERE u.id=#{id}
     </select>
+
+    <insert id="addUser" parameterType="com.shoulder.model.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user (username,email,gender,telephone,create_time) VALUES(#{username},#{email},#{gender},#{telephone},#{createTime})
+    </insert>
 </mapper>
