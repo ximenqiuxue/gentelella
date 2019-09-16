@@ -20,14 +20,14 @@ USE `gentelella`;
 -- Dumping structure for table gentelella.department
 DROP TABLE IF EXISTS `department`;
 CREATE TABLE IF NOT EXISTS `department` (
-                                            `id` int(11) NOT NULL DEFAULT '0' COMMENT '主键',
+                                            `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                             `name` varchar(20) DEFAULT NULL COMMENT '名称',
                                             `desc` varchar(50) DEFAULT NULL COMMENT '描述',
                                             `pid` int(11) DEFAULT NULL COMMENT '父id',
                                             PRIMARY KEY (`id`),
-                                            KEY `department_department__fk` (`pid`),
-                                            CONSTRAINT `department_department__fk` FOREIGN KEY (`pid`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
+                                            KEY `d_d_self` (`pid`),
+                                            CONSTRAINT `d_d_self` FOREIGN KEY (`pid`) REFERENCES `department` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='部门';
 
 -- Dumping data for table gentelella.department: ~10 rows (大约)
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
@@ -47,15 +47,15 @@ INSERT INTO `department` (`id`, `name`, `desc`, `pid`) VALUES
 -- Dumping structure for table gentelella.menu
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE IF NOT EXISTS `menu` (
-                                      `id` int(11) NOT NULL DEFAULT '0' COMMENT '主键',
+                                      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                       `name` varchar(50) DEFAULT NULL COMMENT '名称',
                                       `url` varchar(100) DEFAULT NULL COMMENT '路径',
                                       `icon` varchar(50) DEFAULT NULL,
                                       `pid` int(11) DEFAULT NULL COMMENT '父级id',
                                       PRIMARY KEY (`id`),
-                                      KEY `menu_menu__fk` (`pid`),
-                                      CONSTRAINT `menu_menu__fk` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单表';
+                                      KEY `m_m_self` (`pid`),
+                                      CONSTRAINT `m_m_self` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 -- Dumping data for table gentelella.menu: ~16 rows (大约)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
@@ -122,10 +122,10 @@ CREATE TABLE IF NOT EXISTS `role_menu` (
                                            `rid` int(11) NOT NULL DEFAULT '0' COMMENT '角色id',
                                            `mid` int(11) NOT NULL DEFAULT '0' COMMENT '菜单id',
                                            PRIMARY KEY (`id`),
-                                           KEY `role_menu_role__fk` (`rid`),
-                                           KEY `role_menu_menu__fk` (`mid`),
-                                           CONSTRAINT `role_menu_menu__fk` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-                                           CONSTRAINT `role_menu_role__fk` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
+                                           KEY `r_m_rid` (`rid`),
+                                           KEY `r_m_mid` (`mid`),
+                                           CONSTRAINT `r_m_mid` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`) ON DELETE CASCADE,
+                                           CONSTRAINT `r_m_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
 
 -- Dumping data for table gentelella.role_menu: ~14 rows (大约)
@@ -135,16 +135,20 @@ INSERT INTO `role_menu` (`id`, `rid`, `mid`) VALUES
 (2, 1, 2),
 (3, 1, 3),
 (4, 1, 4),
-(5, 1, 101),
-(6, 1, 201),
-(7, 1, 202),
-(8, 1, 203),
-(9, 1, 204),
-(10, 1, 205),
-(11, 1, 301),
-(12, 1, 401),
-(13, 2, 301),
-(14, 2, 401);
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7),
+(8, 1, 8),
+(9, 1, 9),
+(10, 1, 10),
+(11, 1, 11),
+(12, 1, 12),
+(13, 1, 13),
+(14, 1, 14),
+(15, 1, 15),
+(16, 1, 16),
+(17, 2, 1),
+(18, 2, 2);
 /*!40000 ALTER TABLE `role_menu` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.role_permission
@@ -154,10 +158,10 @@ CREATE TABLE IF NOT EXISTS `role_permission` (
                                                  `rid` int(11) NOT NULL,
                                                  `pid` int(11) NOT NULL,
                                                  PRIMARY KEY (`id`),
-                                                 KEY `role_permission_permission__fk` (`pid`),
-                                                 KEY `role_permission_role__fk` (`rid`),
-                                                 CONSTRAINT `role_permission_permission__fk` FOREIGN KEY (`pid`) REFERENCES `permission` (`id`) ON DELETE CASCADE,
-                                                 CONSTRAINT `role_permission_role__fk` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
+                                                 KEY `r_p_rid` (`rid`),
+                                                 KEY `r_p_pid` (`pid`),
+                                                 CONSTRAINT `r_p_pid` FOREIGN KEY (`pid`) REFERENCES `permission` (`id`) ON DELETE CASCADE,
+                                                 CONSTRAINT `r_p_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
 -- Dumping data for table gentelella.role_permission: ~7 rows (大约)
@@ -168,14 +172,14 @@ INSERT INTO `role_permission` (`id`, `rid`, `pid`) VALUES
 (3, 1, 3),
 (4, 1, 4),
 (5, 1, 5),
-(6, 2, 5),
-(7, 1, 6);
+(6, 1, 6),
+(7, 2, 5);
 /*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-                                      `id` int(11) NOT NULL COMMENT '主键',
+                                      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                       `username` varchar(50) DEFAULT '' COMMENT '用户名',
                                       `password` varchar(50) DEFAULT '' COMMENT '密码',
                                       `email` varchar(50) DEFAULT '' COMMENT '邮箱',
@@ -184,66 +188,36 @@ CREATE TABLE IF NOT EXISTS `user` (
                                       `salt` varchar(100) DEFAULT '' COMMENT '加密字符',
                                       `create_time` varchar(50) DEFAULT NULL COMMENT '设立时间',
                                       PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
--- Dumping data for table gentelella.user: ~55 rows (大约)
+-- Dumping data for table gentelella.user: ~1 rows (大约)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `gender`, `telephone`, `salt`, `create_time`) VALUES
-(1, 'ximen', 'a7d59dfc5332749cb801f86a24f5f590', '1403473722@qq.com', 'male', '18503817798', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-08-24 10:25'),
-(2, 'dongsheng', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(3, 'ximen1', 'a7d59dfc5332749cb801f86a24f5f590', '1403473722@qq.com', 'male', '18503817798', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-08-24 10:25'),
-(4, 'ximen2', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(5, 'ximen3', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(6, 'ximen4', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(7, 'ximen5', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(8, 'ximen6', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(9, 'ximen7', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(10, 'ximen8', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(11, 'ximen9', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(12, 'ximen10', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(13, 'ximen11', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(14, 'ximen12', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(15, 'ximen13', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(16, 'ximen14', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(17, 'ximen15', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(18, 'ximen16', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(19, 'ximen17', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(20, 'ximen18', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(21, 'ximen19', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(22, 'ximen20', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(23, 'ximen21', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(24, 'ximen22', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(25, 'ximen23', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(26, 'ximen24', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(27, 'ximen25', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(28, 'ximen26', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(29, 'ximen27', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(30, 'ximen28', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(31, 'ximen29', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(32, 'ximen30', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(33, 'ximen31', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(34, 'ximen32', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(35, 'ximen33', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(36, 'ximen34', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(37, 'ximen35', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(38, 'ximen36', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(39, 'ximen37', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(40, 'ximen38', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(41, 'ximen39', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(42, 'ximen40', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(43, 'ximen41', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(44, 'ximen42', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(45, 'ximen43', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(46, 'ximen44', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(47, 'ximen45', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(48, 'ximen46', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(49, 'ximen47', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(50, 'ximen48', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(51, 'ximen49', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(52, 'ximen50', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(53, 'ximen51', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(54, 'ximen52', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25'),
-(55, 'ximen53', '43e28304197b9216e45ab1ce8dac831b', '18503817798@163.com', 'female', '18236887931', 'jPz19y7arvYIGhuUjsb6sQ==', '2019-08-24 10:25');
+(1, 'ximen', 'a7d59dfc5332749cb801f86a24f5f590', 'ximen@163.com', 'male', '18236887931', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-09-16 15:28'),
+(2, 'yuxiaoxi', '', '625320456@qq.com', 'female', '17335798837', '', '2019-09-16 15:16'),
+(3, 'changyonghui', '', 'changyonghui@163.com', 'male', '18236887931', '', '2019-09-16 15:16'),
+(4, 'liuduan', '', 'liuduan@163.com', 'female', '18236887931', '', '2019-09-16 15:17'),
+(5, 'yangqichao', '', 'yangqichao@163.com', 'male', '18236887931', '', '2019-09-16 15:21'),
+(6, 'zhangqiongfang', '', '854440931@qq.com', 'female', '19937109080', '', '2019-09-16 15:57'),
+(7, 'zhangsiyuan', '', 'zhangsiyuan@qq.com', 'female', '18236887931', '', '2019-09-16 15:24'),
+(8, 'wuguangheng', '', 'wuguangheng@163.com', 'male', '18236887931', '', '2019-09-16 15:25'),
+(9, 'chenghuoqing', '', 'chenghuoqing@163.com', 'male', '18236887931', '', '2019-09-16 15:31'),
+(10, 'xuman', '', '2466381931@qq.com', 'female', '15803828717', '', '2019-09-16 15:32'),
+(11, 'songzhongling', '', 'songzhongling@qq.com', 'female', '15803821029', '', '2019-09-16 15:32'),
+(12, 'zhanglulu', '', '382945893@qq.com', 'female', '17513318095', '', '2019-09-16 15:38'),
+(13, 'sunrongyou', '', 'srydwhy@163.com', 'female', '15637153072', '', '2019-09-16 15:34'),
+(14, 'mazhengyu', '', '804132285@qq.com', 'female', '15890123263', '', '2019-09-16 15:46'),
+(15, 'cuijie', '', '362641790@qq.com', 'male', '15516160309', '', '2019-09-16 15:49'),
+(16, 'hujiyong', '', '504981561@qq.com', 'male', '13673640127', '', '2019-09-16 15:51'),
+(17, 'guoruidong', '', '307260894@qq.com', 'male', '18537181742', '', '2019-09-16 16:05'),
+(18, 'liuruiling', '', '502478011@qq.com', 'female', '17737150201', '', '2019-09-16 16:06'),
+(19, 'shamanding', '', '502579565@qq.com', 'male', '13539961627', '', '2019-09-16 16:07'),
+(20, 'zhangbo', '', '383109300@qq.com', 'female', '17537135185', '', '2019-09-16 16:08'),
+(21, 'liuwei', '', '13676985508@163.com', 'female', '13676985508', '', '2019-09-16 16:08'),
+(22, 'shixiaodong', '', '875970653@qq.com', 'male', '18538528180', '', '2019-09-16 16:09'),
+(23, 'xiongzhenzhen', '', 'zhenxin180@126.com', 'female', '15938770293', '', '2019-09-16 16:10'),
+(24, 'guoding', '', '674672170@qq.com', 'female', '13613846355', '', '2019-09-16 16:23'),
+(25, 'qinxiaoyang', '', '898499397@qq.com', 'male', '18538101871', '', '2019-09-16 16:23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.user_dept
@@ -251,39 +225,85 @@ DROP TABLE IF EXISTS `user_dept`;
 CREATE TABLE IF NOT EXISTS `user_dept` (
                                            `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                            `uid` int(11) NOT NULL COMMENT '用户id',
-                                           `dept_id` int(11) NOT NULL DEFAULT '0' COMMENT '部门id',
+                                           `dept_id` int(11) NOT NULL COMMENT '部门id',
                                            PRIMARY KEY (`id`),
-                                           KEY `user_dept_department__fk` (`dept_id`),
-                                           KEY `user_dept_user__fk` (`uid`),
-                                           CONSTRAINT `user_dept_department__fk` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-                                           CONSTRAINT `user_dept_user__fk` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户部门表';
+                                           KEY `u_d_uid` (`uid`),
+                                           KEY `u_d_dept_id` (`dept_id`),
+                                           CONSTRAINT `u_d_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`) ON DELETE CASCADE,
+                                           CONSTRAINT `u_d_uid` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='用户部门表';
 
--- Dumping data for table gentelella.user_dept: ~2 rows (大约)
+-- Dumping data for table gentelella.user_dept: ~1 rows (大约)
 /*!40000 ALTER TABLE `user_dept` DISABLE KEYS */;
 INSERT INTO `user_dept` (`id`, `uid`, `dept_id`) VALUES
-(1, 1, 101),
-(2, 2, 4);
+(1, 1, 4),
+(2, 2, 9),
+(3, 3, 4),
+(4, 4, 4),
+(5, 5, 4),
+(6, 6, 5),
+(7, 7, 4),
+(8, 8, 4),
+(9, 9, 4),
+(10, 10, 8),
+(11, 11, 7),
+(12, 12, 1),
+(13, 13, 7),
+(14, 14, 4),
+(15, 15, 4),
+(16, 16, 4),
+(17, 17, 4),
+(18, 18, 5),
+(19, 19, 5),
+(20, 20, 5),
+(21, 21, 3),
+(22, 22, 4),
+(23, 23, 9),
+(24, 24, 6),
+(25, 25, 6);
 /*!40000 ALTER TABLE `user_dept` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.user_role
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE IF NOT EXISTS `user_role` (
-                                           `id` int(11) NOT NULL DEFAULT '0',
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
                                            `uid` int(11) DEFAULT NULL,
                                            `rid` int(11) DEFAULT NULL,
                                            PRIMARY KEY (`id`),
-                                           KEY `user_role_user__fk` (`uid`),
-                                           KEY `user_role_role__fk` (`rid`),
-                                           CONSTRAINT `user_role_role__fk` FOREIGN KEY (`rid`) REFERENCES `role` (`id`),
-                                           CONSTRAINT `user_role_user__fk` FOREIGN KEY (`uid`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                                           KEY `u_r_uid` (`uid`),
+                                           KEY `u_r_rid` (`rid`),
+                                           CONSTRAINT `u_r_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE,
+                                           CONSTRAINT `u_r_uid` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gentelella.user_role: ~2 rows (大约)
+-- Dumping data for table gentelella.user_role: ~1 rows (大约)
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `uid`, `rid`) VALUES
 (1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(3, 3, 2),
+(4, 4, 2),
+(5, 5, 2),
+(6, 6, 2),
+(7, 7, 2),
+(8, 8, 2),
+(9, 9, 2),
+(10, 10, 2),
+(11, 11, 2),
+(12, 12, 2),
+(13, 13, 2),
+(14, 14, 2),
+(15, 15, 2),
+(16, 16, 2),
+(17, 17, 2),
+(18, 18, 2),
+(19, 19, 2),
+(20, 20, 2),
+(21, 21, 2),
+(22, 22, 2),
+(23, 23, 2),
+(24, 24, 2),
+(25, 25, 2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
