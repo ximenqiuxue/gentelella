@@ -9,15 +9,14 @@
     <link rel="icon" th:href="@{/static/images/favicon.ico}"/>
     <title>shoulder</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/bootstrap.min.css}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/font-awesome.min.css}">
     <!-- NProgress -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/nprogress.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/nprogress.css}">
     <!--iCheck -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/green.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/green.css}">
     <!-- Datatables -->
-    <!--<link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/jquery.dataTables.min.css}">-->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
@@ -27,19 +26,9 @@
     <!-- bootstrap-datetimepicker css -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datepicker/bootstrap-datetimepicker.min.css}">
     <!-- Custom Theme Style -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/common/custom.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
     <!--layUi js-->
     <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
-    <style>
-        #userForm {
-            width: 850px;
-        }
-        #userForm label.error {
-            margin-left: 10px;
-            width: auto;
-            display: inline;
-        }
-    </style>
 </head>
 
 <body class="nav-md">
@@ -65,7 +54,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="addUser()"><span>新增</span></button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="addUser()"><span>新增</span></button>
                     <table id="userTable" class="table table-striped table-hover table-bordered">
                         <thead>
                         <tr>
@@ -113,9 +102,7 @@
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">性别<span class="required">*</span></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div id="gender" class="btn-group" data-toggle="buttons"></div>
-                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" id="gender"></div>
                             </div>
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -176,15 +163,15 @@
 </div>
 
 <!-- jQuery -->
-<script type="text/javascript" th:src="@{/static/js/common/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery/jquery.min.js}"></script>
 <!-- Bootstrap -->
-<script type="text/javascript" th:src="@{/static/js/common/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap.min.js}"></script>
 <!-- FastClick -->
-<script type="text/javascript" th:src="@{/static/js/common/fastclick.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/fastclick.js}"></script>
 <!-- NProgress -->
-<script type="text/javascript" th:src="@{/static/js/common/nprogress.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/nprogress.js}"></script>
 <!-- iCheck -->
-<script type="text/javascript" th:src="@{/static/js/common/icheck.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/icheck.min.js}"></script>
 <!-- Datatables -->
 <script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
@@ -203,18 +190,34 @@
 <script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
 <!-- Validate-->
-<script type="text/javascript" th:src="@{/static/js/common/validator.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery/validator.js}"></script>
 <!-- bootstrap-datetimepicker js -->
 <script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
 <!--添加读取json体的handlebars模板引擎-->
-<script type="text/javascript" th:src="@{/static/js/common/handlebars-v4.2.0.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
-<script type="text/javascript" th:src="@{/static/js/common/custom.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap/custom.min.js}"></script>
 <!--使用handlebars创建模板-->
 <script type="text/template" id="operateRow">
-    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="{{editBtn}}"><i class="fa fa-edit"></i></button>
+    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="{{editBtn}}"><i class="fa fa-edit"></i></button>
     <button type="button" class="btn btn-dark btn-xs" onclick="{{deleteBtn}}"><i class="fa fa-trash"></i></button>
+</script>
+
+<script type="text/template" id="maleRadio">
+    <span>男</span>
+    <input type="radio" class="flat" name="gender" value="male" checked/>
+    &nbsp;&nbsp;
+    <span>女</span>
+    <input type="radio" class="flat" name="gender" value="female"/>
+</script>
+
+<script type="text/template" id="femaleRadio">
+    <span>男</span>
+    <input type="radio" class="flat" name="gender" value="male"/>
+    &nbsp;&nbsp;
+    <span>女</span>
+    <input type="radio" class="flat" name="gender" value="female" checked/>
 </script>
 
 <script type="text/javascript" th:inline="javascript">
@@ -222,7 +225,7 @@
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
 
-    var table, layer;
+    var table, layer, maleRadioTemplate, femaleRadioTemplate;
 
     layui.use('layer', function () {
         layer = layui.layer;
@@ -233,9 +236,13 @@
     var addOrEdit = true;
 
     $(document).ready(function() {
-        var operateRow = $("#operateRow").html();
         //预编译模板
-        var template = Handlebars.compile(operateRow);
+        var template = Handlebars.compile($("#operateRow").html());
+        //预编译模板
+        maleRadioTemplate = Handlebars.compile($("#maleRadio").html());
+        //预编译模板
+        femaleRadioTemplate = Handlebars.compile($("#femaleRadio").html());
+
         table = $("#userTable").DataTable({
             "destroy": true,
             "processing": false,
@@ -373,7 +380,6 @@
                 $("#userId").val(user.id);
                 $("#username").val(user.username);
                 $("#email").val(user.email);
-                $("#gender").val(user.gender);
                 $("#telephone").val(user.telephone);
                 $("#createTime").val(user.createTime);
                 initTimePicker();
@@ -382,17 +388,9 @@
                 $("#deptId").empty();
                 //加载raido
                 if (user.gender == "male"){
-                    $("#gender").append("<span>男</span>\n" +
-                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\" checked/>\n" +
-                        "&nbsp;&nbsp;\n" +
-                        "<span>女</span>\n" +
-                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\"/>")
+                    $("#gender").append(maleRadioTemplate());
                 }else {
-                    $("#gender").append("<span>男</span>\n" +
-                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\"/>\n" +
-                        "&nbsp;&nbsp;\n" +
-                        "<span>女</span>\n" +
-                        "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>")
+                    $("#gender").append(femaleRadioTemplate())
                 }
                 //加载角色
                 for (var i = 0; i < roles.length; i++) {
@@ -434,11 +432,7 @@
                 $("#rId").empty();
                 $("#deptId").empty();
                 //加载raido
-                $("#gender").append("<span>男</span>\n" +
-                    "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"male\"/>\n" +
-                    "&nbsp;&nbsp;\n" +
-                    "<span>女</span>\n" +
-                    "<input type=\"radio\" class=\"flat\" name=\"gender\" value=\"female\" checked/>");
+                $("#gender").append(maleRadioTemplate());
                 //加载角色
                 for (var i = 0; i < roles.length; i++) {
                     $("#rId").append("<option value='"+roles[i].id+"'>" + roles[i].name + "</option>");

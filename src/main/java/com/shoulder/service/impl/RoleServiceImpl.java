@@ -37,4 +37,10 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> getAll() throws Exception {
         return roleMapper.findAll();
     }
+
+    @Override
+    public boolean addRole(Role role) throws Exception {
+        Integer flag = roleMapper.addEntity(role);
+        return flag > 0;
+    }
 }
