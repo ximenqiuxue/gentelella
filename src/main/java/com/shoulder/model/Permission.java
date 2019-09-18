@@ -5,7 +5,7 @@ public class Permission {
 
     private String name;
 
-    private String desc;
+    private String description;
 
     private String url;
 
@@ -14,7 +14,7 @@ public class Permission {
         return "Permission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }
@@ -35,12 +35,12 @@ public class Permission {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUrl() {

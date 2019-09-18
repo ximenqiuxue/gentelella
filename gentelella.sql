@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `department` (
 
 -- Dumping data for table gentelella.department: ~10 rows (大约)
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` (`id`, `name`, `desc`, `pid`) VALUES
+INSERT INTO `department` (`id`, `name`, `description`, `pid`) VALUES
 (1, '综合部', '综合管理', NULL),
 (2, '质量部', '质量管理', NULL),
 (3, '采购部', '采购管理', NULL),
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
 
 -- Dumping data for table gentelella.permission: ~6 rows (大约)
 /*!40000 ALTER TABLE `permission` DISABLE KEYS */;
-INSERT INTO `permission` (`id`, `name`, `desc`, `url`) VALUES
+INSERT INTO `permission` (`id`, `name`, `description`, `url`) VALUES
 (1, 'addUser', '新增', '/user/addUser.do'),
 (2, 'updateUser', '修改', '/user/updateUser.do'),
 (3, 'deleteUser', '删除', '/user/deleteUser.do'),
@@ -104,13 +104,13 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
                                       `id` int(11) NOT NULL AUTO_INCREMENT,
                                       `name` varchar(100) DEFAULT NULL,
-                                      `desc` varchar(100) DEFAULT NULL,
+                                      `description` varchar(100) DEFAULT NULL,
                                       PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table gentelella.role: ~2 rows (大约)
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (`id`, `name`, description) VALUES
+INSERT INTO `role` (`id`, `name`, `description`) VALUES
 (1, 'admin', '超级管理员'),
 (2, 'user', '普通用户');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;

@@ -3,15 +3,15 @@ package com.shoulder.model;
 public class Department {
     private Integer id;
     private String name;
-    private String desc;
+    private String description;
     private Integer pid;
 
     @Override
     public String toString() {
-        return "department{" +
+        return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", description='" + description + '\'' +
                 ", pid=" + pid +
                 '}';
     }
@@ -32,12 +32,12 @@ public class Department {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPid() {
