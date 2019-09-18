@@ -9,6 +9,7 @@ public class Menu {
     private String url;
     private String icon;
     private Integer pid;
+    private Menu parent;
     private List<Menu> children = new ArrayList<>();
 
     @Override
@@ -19,6 +20,7 @@ public class Menu {
                 ", url='" + url + '\'' +
                 ", icon='" + icon + '\'' +
                 ", pid=" + pid +
+                ", parent=" + parent +
                 ", children=" + children +
                 '}';
     }
@@ -61,6 +63,14 @@ public class Menu {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Menu getParent() {
+        return parent;
+    }
+
+    public void setParent(Menu parent) {
+        this.parent = parent;
     }
 
     public List<Menu> getChildren() {

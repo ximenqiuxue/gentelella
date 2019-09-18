@@ -35,7 +35,7 @@ public class UserController {
 
     @RequestMapping(value = "/index")
     public String toIndex() {
-        return "user/index";
+        return "user/list";
     }
 
     @ResponseBody

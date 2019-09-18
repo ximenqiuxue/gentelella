@@ -48,38 +48,42 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>角色信息</h2>
+                            <h2>菜单信息</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target=".role-modal" onclick="addRole()"><span>新增</span></button>
-                            <table id="roleTable" class="table table-hover table-bordered">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target=".menu-modal" onclick="addMenu()"><span>新增</span></button>
+                            <table id="menuTable" class="table table-hover table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>角色名</th>
-                                    <th>描述</th>
-                                    <th>操作</th>
-                                </tr>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>菜单名</th>
+                                        <th>访问路径</th>
+                                        <th>图标</th>
+                                        <th>父级菜单</th>
+                                        <th>操作</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="role,iterStat:${roles}">
+                                <tr th:each="menu,iterStat:${menus}">
                                     <td th:text="${iterStat.count}"></td>
-                                    <td th:text="${role.name}"></td>
-                                    <td th:text="${role.description}"></td>
+                                    <td th:text="${menu.name}"></td>
+                                    <td th:text="${menu.url == null} ? '--' : ${menu.url}"></td>
+                                    <td><i th:class="${menu.icon}"></i></td>
+                                    <td th:text="${menu.parent.name == null} ? '--' : ${menu.parent.name}"></td>
                                     <td>
-                                        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".role-modal" th:onclick="|editRole(${role.id})|"><i class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-dark btn-xs" th:onclick="|deleteRole(${role.id})|"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".menu-modal" th:onclick="|editMenu(${menu.id},${menu.pid})|"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-dark btn-xs" th:onclick="|deleteMenu(${menu.id})|"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div class="modal fade role-modal" id="roleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal fade menu-modal" id="menuModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -88,20 +92,35 @@
                                         <h4 class="modal-title" id="modalName"></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="roleForm" class="form-horizontal form-label-left" novalidate>
-                                            <input type="hidden" id="roleId" name="id">
+                                        <form id="menuForm" class="form-horizontal form-label-left" novalidate>
+                                            <input type="hidden" id="menuId" name="id">
                                             <div class="item form-group">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">角色名<span class="required">*</span>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">菜单名<span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name" placeholder="Smith" required="required">
+                                                    <input id="name" type="text" class="form-control col-md-7 col-xs-12" name="name" placeholder="系统管理..." required="required">
                                                 </div>
                                             </div>
                                             <div class="item form-group">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">描述</span>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="url">路径</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="description" type="text" name="description" data-validate-length-range="5,20" class="optional form-control col-md-7 col-xs-12" placeholder="输入不多于20字的描述...">
+                                                    <input id="url" type="text" name="url" class="optional form-control col-md-7 col-xs-12" placeholder="/xx/xx.do">
+                                                </div>
+                                            </div>
+                                            <div class="item form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="icon">图标</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input id="icon" type="text" name="icon" class="form-control col-md-7 col-xs-12" placeholder="fa fa-plus">
+                                                </div>
+                                            </div>
+                                            <div class="item form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">父级菜单</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <select id="pid" name="pid" class="select2_single form-control" tabindex="-1">
+
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="ln_solid"></div>
@@ -181,7 +200,7 @@
 
     $(document).ready(function () {
         //初始化表
-        table = $("#roleTable").DataTable({
+        table = $("#menuTable").DataTable({
             "destroy": true,
             "processing": false,
             "bSort": false,
@@ -206,34 +225,64 @@
                 {"className": 'text-center'},
                 {"className": 'text-center'},
                 {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center'},
                 {"className": 'text-center'}
             ]
         }).draw();
     });
 
-    function addRole() {
+    function addMenu() {
         addOrEdit=true;
-        $("#modalName").text("添加角色");
-        $("#roleId").val('');
-        document.getElementById("roleForm").reset();
-    }
-
-    function editRole(id) {
-        addOrEdit=false;
-        $("#modalName").text("编辑角色");
+        $("#modalName").text("添加菜单");
+        $("#menuId").val('');
+        document.getElementById("menuForm").reset();
         $.ajax({
             type: "GET",
-            url: BASE + "role/getRole.do",
-            data: {id: id},
+            url: BASE + "menu/list.do",
+            beforeSend: function () {
+                loadingIndex = layer.msg('处理中', {icon: 16});
+            },
+            success: function (result) {
+                var menus = result.data;
+                $("#pid").empty();
+                $("#pid").append("<option>--选择--</option>");
+                for (var i = 0; i < menus.length; i++) {
+                    $("#pid").append("<option value='"+menus[i].id+"'>" + menus[i].name + "</option>");
+                }
+                //关闭刷新框
+                layer.close(loadingIndex);
+            }
+        })
+    }
+
+    function editMenu(id,pid) {
+        addOrEdit=false;
+        $("#modalName").text("编辑菜单");
+        $.ajax({
+            type: "GET",
+            url: BASE + "menu/list.do",
             beforeSend : function(){
                 loadingIndex = layer.msg('处理中', {icon: 16});
             },
             success: function (result) {
                 if (result.code == 100){
-                    var role = result.data;
-                    $("#roleId").val(role.id);
-                    $("#name").val(role.name);
-                    $("#description").val(role.description);
+                    var menus = result.data;
+                    $("#pid").empty();
+                    $("#pid").append("<option>--选择--</option>");
+                    for (var i = 0; i < menus.length; i++) {
+                        if (id == menus[i].id){
+                            $("#menuId").val(menus[i].id);
+                            $("#name").val(menus[i].name);
+                            $("#url").val(menus[i].url);
+                            $("#icon").val(menus[i].icon);
+                        }
+                        if (pid == menus[i].id) {
+                            $("#pid").append("<option selected value='"+menus[i].id+"'>" + menus[i].name + "</option>");
+                        }else{
+                            $("#pid").append("<option value='"+menus[i].id+"'>" + menus[i].name + "</option>");
+                        }
+                    }
                 }else {
                     layer.msg("获取数据异常" + result.msg, {time: 3000, icon: 5, shift: 6}, function () {});
                 }
@@ -245,12 +294,12 @@
 
     function save() {
         //$("#roleForm").parsley().validate()
-        if (validator.checkAll("#roleForm")){
+        if (validator.checkAll("#menuForm")){
             if (addOrEdit){
                 $.ajax({
                     type:"POST",
-                    url: BASE + "role/addRole.do",
-                    data: $("#roleForm").serialize(),
+                    url: BASE + "menu/addMenu.do",
+                    data: $("#menuForm").serialize(),
                     success: function (result) {
                         if (result.code == 100) {
                             //重新加载表格
@@ -264,8 +313,8 @@
             }else{
                 $.ajax({
                     type:"POST",
-                    url: BASE + "role/updateRole.do",
-                    data: $("#roleForm").serialize(),
+                    url: BASE + "menu/updateMenu.do",
+                    data: $("#menuForm").serialize(),
                     success: function (result) {
                         if (result.code == 100) {
                             //重新加载表格
@@ -280,10 +329,10 @@
         }
     }
 
-    function deleteRole(id) {
+    function deleteMenu(id) {
         layer.confirm('确定删除吗？', function (index) {
             $.ajax({
-                url: BASE + "role/deleteRole.do",
+                url: BASE + "menu/deleteMenu.do",
                 data: {id: id},
                 success: function (result) {
                     if (result.code == 100){

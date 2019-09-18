@@ -14,4 +14,10 @@ public interface RoleService {
     List<Role> getAll() throws Exception;
 
     boolean addRole(Role role) throws Exception;
+
+    Role findRole(Integer id) throws Exception;
+
+    boolean updateRole(Role role) throws Exception;
+
+    boolean deleteRole(Integer id) throws Exception;
 }

@@ -9,4 +9,12 @@
         LEFT JOIN role r ON r.id=ur.rid
         WHERE u.username=#{username}
     </select>
+
+    <insert id="addEntity" parameterType="com.shoulder.model.Role" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO role (name, description) VALUES(#{name},#{description})
+    </insert>
+
+    <update id="updateEntity" parameterType="com.shoulder.model.Role" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        UPDATE role SET name=#{name}, description=#{description} WHERE id=#{id}
+    </update>
 </mapper>

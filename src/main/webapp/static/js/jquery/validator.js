@@ -15,26 +15,26 @@ var validator = (function($){
     /* general text messages
     */
     message = {
-        invalid         : '输入信息无效',
-        checked         : '请勾选',
-        empty           : '输入不能为空',
-        min             : '输入字符太短',
-        max             : '输入字符过长',
+        invalid         : '输入无效',
+        checked         : 'must be checked',
+        empty           : '必填项',
+        min             : '内容不足',
+        max             : '内容过长',
         number_min      : 'too low',
         number_max      : 'too high',
-        url             : '无效链接',
-        number          : '请输入数字',
+        url             : '链接无效',
+        number          : '输入数字',
         email           : '邮箱地址无效',
-        email_repeat    : '二次邮箱输入不一致',
-        password_repeat : '二次密码输入不一致',
-        repeat          : '两次输入不一致',
-        complete        : '输入不完整',
-        select          : '请选择一个备用项'
+        email_repeat    : 'emails do not match',
+        password_repeat : 'passwords do not match',
+        repeat          : 'no match',
+        complete        : 'input is not complete',
+        select          : '给出一个选择'
     };
 
     if(!window.console){
         console={};
-        console.log=console.warn=function(){  }
+        console.log=console.warn=function(){ return; }
     }
 
     // defaults
@@ -78,10 +78,9 @@ var validator = (function($){
         },
         // a "skip" will skip some of the tests (needed for keydown validation)
         text : function(a, skip){
-            // make sure there are at least X number of words, each at least 6 chars long.
+            // make sure there are at least X number of words, each at least 2 chars long.
             // for example 'john F kenedy' should be at least 2 words and will pass validation
             if( validateWords ){
-                console.log(a.length + "username1");
                 var words = a.split(' ');
                 // iterrate on all the words
                 var wordsLength = function(len){
@@ -92,7 +91,7 @@ var validator = (function($){
                 };
 
                 if( words.length < validateWords || !wordsLength(2) ){
-                    alertTxt = '长度不小于2';
+                    alertTxt = message.complete;
                     return false;
                 }
                 return true;
@@ -310,7 +309,7 @@ var validator = (function($){
 
         prepareFieldData(this);
 
-        field.data( 'val', field[0].value.replace(/^\s+|\s+$/g, "") );  // cache the value of the field and trim(去掉开始的空格和结束的空格) it
+        field.data( 'val', field[0].value.replace(/^\s+|\s+$/g, "") );  // cache the value of the field and trim it
         data = field.data();
 
         // Check if there is a specific error message for that field, if not, use the default 'invalid' message

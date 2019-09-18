@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 -- Dumping data for table gentelella.role: ~2 rows (大约)
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (`id`, `name`, `desc`) VALUES
+INSERT INTO `role` (`id`, `name`, description) VALUES
 (1, 'admin', '超级管理员'),
 (2, 'user', '普通用户');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;

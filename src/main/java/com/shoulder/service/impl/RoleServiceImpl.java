@@ -43,4 +43,21 @@ public class RoleServiceImpl implements RoleService {
         Integer flag = roleMapper.addEntity(role);
         return flag > 0;
     }
+
+    @Override
+    public Role findRole(Integer id) throws Exception {
+        return roleMapper.findEntity(id);
+    }
+
+    @Override
+    public boolean deleteRole(Integer id) throws Exception {
+        Integer flag = roleMapper.deleteEntity(id);
+        return flag > 0;
+    }
+
+    @Override
+    public boolean updateRole(Role role) throws Exception {
+        Integer flag = roleMapper.updateEntity(role);
+        return flag > 0;
+    }
 }
