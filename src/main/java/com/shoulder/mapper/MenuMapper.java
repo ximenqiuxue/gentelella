@@ -11,9 +11,21 @@ import java.util.List;
 
 @Repository
 public interface MenuMapper {
+    /**
+     * 初始化获取授权菜单
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    List<Menu> findAuthMenu(String username) throws Exception;
 
+    /**
+     * 获取menu
+     * @return
+     * @throws Exception
+     */
     @Select("SELECT * FROM menu")
-    List<Menu> findAll() throws Exception;
+    List<Menu> findList() throws Exception;
 
     @Select("SELECT * FROM menu WHERE id=#{id};")
     Menu findEntity(Integer id);

@@ -5,9 +5,19 @@ import com.shoulder.model.Menu;
 import java.util.List;
 
 public interface MenuService {
+    /**
+     * 获取授权菜单
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    List<Menu> getAuthMenu(String username) throws Exception;
 
-    List<Menu> getAll() throws Exception;
-
+    /**
+     * 获取menu
+     * @return
+     * @throws Exception
+     */
     List<Menu> getList() throws Exception;
 
     Menu findMenu(Integer id) throws Exception;

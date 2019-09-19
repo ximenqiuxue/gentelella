@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `department`;
 CREATE TABLE IF NOT EXISTS `department` (
                                             `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                             `name` varchar(20) DEFAULT NULL COMMENT '名称',
-                                            `desc` varchar(50) DEFAULT NULL COMMENT '描述',
+                                            `description` varchar(50) DEFAULT NULL COMMENT '描述',
                                             `pid` int(11) DEFAULT NULL COMMENT '父id',
                                             PRIMARY KEY (`id`),
                                             KEY `d_d_self` (`pid`),
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
                                       PRIMARY KEY (`id`),
                                       KEY `m_m_self` (`pid`),
                                       CONSTRAINT `m_m_self` FOREIGN KEY (`pid`) REFERENCES `menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 -- Dumping data for table gentelella.menu: ~16 rows (大约)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
@@ -68,7 +68,7 @@ INSERT INTO `menu` (`id`, `name`, `url`, `icon`, `pid`) VALUES
 (6, '控制台', '/common/index.do', NULL, 1),
 (7, '菜单管理', '/menu/index.do', NULL, 2),
 (8, '角色管理', '/role/index.do', NULL, 2),
-(9, '权限管理', '/perm/index.do', NULL, 2),
+(9, '权限管理', '/permission/index.do', '', 2),
 (10, '用户管理', '/user/index.do', NULL, 2),
 (11, '角色菜单', '/role_menu/index.do', NULL, 2),
 (12, '角色权限', '/role_perm/index.do', NULL, 2),
@@ -83,20 +83,33 @@ DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
                                             `id` int(11) NOT NULL AUTO_INCREMENT,
                                             `name` varchar(100) DEFAULT NULL,
-                                            `desc` varchar(100) DEFAULT NULL,
+                                            `description` varchar(100) DEFAULT NULL,
                                             `url` varchar(100) DEFAULT NULL,
                                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gentelella.permission: ~6 rows (大约)
+-- Dumping data for table gentelella.permission: ~19 rows (大约)
 /*!40000 ALTER TABLE `permission` DISABLE KEYS */;
 INSERT INTO `permission` (`id`, `name`, `description`, `url`) VALUES
-(1, 'addUser', '新增', '/user/addUser.do'),
-(2, 'updateUser', '修改', '/user/updateUser.do'),
-(3, 'deleteUser', '删除', '/user/deleteUser.do'),
-(4, 'toUpdateUser', '待修改', '/user/toUpdateUser.do'),
-(5, 'userList', '查看', '/user/index.do'),
-(6, 'roleList', '查看', '/role/index.do');
+(1, 'user_save', '用户修改或新增', '/user/saveUser.do'),
+(2, 'user_to_update', '新增或修改初始化', '/user/toAddOrUpdate.do'),
+(3, 'user_delete', '用户删除', '/user/deleteUser.do'),
+(5, 'user_index', '用户页面跳转', '/user/index.do'),
+(6, 'role_index', '角色页面跳转与数据加载', '/role/index.do'),
+(16, 'user_list', '用户页面table数据读取', '/user/list.do'),
+(17, 'role_add', '角色新增保存', '/role/addRole.do'),
+(18, 'role_get', '获取单个角色', '/role/getRole.do'),
+(19, 'role_update', '角色修改保存', '/role/updateRole.do'),
+(20, 'role_delete', '角色删除', '/role/deleteRole.do'),
+(21, 'menu_index', '菜单页面跳转和数据获取', '/menu/index.do'),
+(22, 'menu_list', '获取页面需要赋值域，例如select', '/menu/list.do'),
+(23, 'menu_get', '获取单个菜单', '/menu/getMenu.do'),
+(24, 'menu_add', '菜单新增保存', '/menu/addMenu.do'),
+(25, 'menu_update', '菜单修改保存', '/menu/updateMenu.do'),
+(26, 'menu_delete', '菜单删除', '/menu/deleteMenu.do'),
+(27, 'permission_index', '资源页面跳转和数据初始化', '/permission/index.do'),
+(28, 'permission_get', '获取单个权限', '/permission/getPermission.do'),
+(29, 'permission_add', '新增资源保存', '/permission/addPermission.do');
 /*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.role
@@ -106,13 +119,17 @@ CREATE TABLE IF NOT EXISTS `role` (
                                       `name` varchar(100) DEFAULT NULL,
                                       `description` varchar(100) DEFAULT NULL,
                                       PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gentelella.role: ~2 rows (大约)
+-- Dumping data for table gentelella.role: ~6 rows (大约)
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` (`id`, `name`, `description`) VALUES
-(1, 'admin', '超级管理员'),
-(2, 'user', '普通用户');
+(1, '系统管理员', '超级管理员'),
+(2, '普通用户', '普通用户'),
+(5, '研发经理', '管理研发工作'),
+(6, '产品经理', '产品推广应用以及新产品定义'),
+(7, '人事经理', '员工绩效考核，人员变动安排以及培训'),
+(8, '行政经理', '负责公司行政，对外宣传工作');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.role_menu
@@ -126,9 +143,9 @@ CREATE TABLE IF NOT EXISTS `role_menu` (
                                            KEY `r_m_mid` (`mid`),
                                            CONSTRAINT `r_m_mid` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`) ON DELETE CASCADE,
                                            CONSTRAINT `r_m_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='角色菜单表';
 
--- Dumping data for table gentelella.role_menu: ~14 rows (大约)
+-- Dumping data for table gentelella.role_menu: ~18 rows (大约)
 /*!40000 ALTER TABLE `role_menu` DISABLE KEYS */;
 INSERT INTO `role_menu` (`id`, `rid`, `mid`) VALUES
 (1, 1, 1),
@@ -164,16 +181,27 @@ CREATE TABLE IF NOT EXISTS `role_permission` (
                                                  CONSTRAINT `r_p_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
--- Dumping data for table gentelella.role_permission: ~7 rows (大约)
+-- Dumping data for table gentelella.role_permission: ~18 rows (大约)
 /*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
 INSERT INTO `role_permission` (`id`, `rid`, `pid`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
-(4, 1, 4),
 (5, 1, 5),
 (6, 1, 6),
-(7, 2, 5);
+(7, 2, 5),
+(8, 1, 16),
+(9, 1, 17),
+(10, 1, 18),
+(11, 1, 19),
+(12, 1, 20),
+(13, 1, 21),
+(14, 1, 22),
+(15, 1, 23),
+(16, 1, 24),
+(17, 1, 25),
+(18, 1, 26),
+(19, 1, 27);
 /*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 
 -- Dumping structure for table gentelella.user
@@ -188,21 +216,21 @@ CREATE TABLE IF NOT EXISTS `user` (
                                       `salt` varchar(100) DEFAULT '' COMMENT '加密字符',
                                       `create_time` varchar(50) DEFAULT NULL COMMENT '设立时间',
                                       PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
--- Dumping data for table gentelella.user: ~1 rows (大约)
+-- Dumping data for table gentelella.user: ~25 rows (大约)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `gender`, `telephone`, `salt`, `create_time`) VALUES
 (1, 'ximen', 'a7d59dfc5332749cb801f86a24f5f590', 'ximen@163.com', 'male', '18236887931', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-09-16 15:28'),
 (2, 'yuxiaoxi', '', '625320456@qq.com', 'female', '17335798837', '', '2019-09-16 15:16'),
 (3, 'changyonghui', '', 'changyonghui@163.com', 'male', '18236887931', '', '2019-09-16 15:16'),
-(4, 'liuduan', '', 'liuduan@163.com', 'female', '18236887931', '', '2019-09-16 15:17'),
+(4, 'liuduan', 'a7d59dfc5332749cb801f86a24f5f590', 'liuduan@163.com', 'female', '18236887931', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-09-16 15:17'),
 (5, 'yangqichao', '', 'yangqichao@163.com', 'male', '18236887931', '', '2019-09-16 15:21'),
 (6, 'zhangqiongfang', '', '854440931@qq.com', 'female', '19937109080', '', '2019-09-16 15:57'),
 (7, 'zhangsiyuan', '', 'zhangsiyuan@qq.com', 'female', '18236887931', '', '2019-09-16 15:24'),
 (8, 'wuguangheng', '', 'wuguangheng@163.com', 'male', '18236887931', '', '2019-09-16 15:25'),
 (9, 'chenghuoqing', '', 'chenghuoqing@163.com', 'male', '18236887931', '', '2019-09-16 15:31'),
-(10, 'xuman', '', '2466381931@qq.com', 'female', '15803828717', '', '2019-09-16 15:32'),
+(10, 'xuman', 'a7d59dfc5332749cb801f86a24f5f590', '2466381931@qq.com', 'female', '15803828717', 'e5ykFiNwShfCXvBRPr3wXg==', '2019-09-16 15:32'),
 (11, 'songzhongling', '', 'songzhongling@qq.com', 'female', '15803821029', '', '2019-09-16 15:32'),
 (12, 'zhanglulu', '', '382945893@qq.com', 'female', '17513318095', '', '2019-09-16 15:38'),
 (13, 'sunrongyou', '', 'srydwhy@163.com', 'female', '15637153072', '', '2019-09-16 15:34'),
@@ -231,9 +259,9 @@ CREATE TABLE IF NOT EXISTS `user_dept` (
                                            KEY `u_d_dept_id` (`dept_id`),
                                            CONSTRAINT `u_d_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`) ON DELETE CASCADE,
                                            CONSTRAINT `u_d_uid` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='用户部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='用户部门表';
 
--- Dumping data for table gentelella.user_dept: ~1 rows (大约)
+-- Dumping data for table gentelella.user_dept: ~25 rows (大约)
 /*!40000 ALTER TABLE `user_dept` DISABLE KEYS */;
 INSERT INTO `user_dept` (`id`, `uid`, `dept_id`) VALUES
 (1, 1, 4),
@@ -274,9 +302,9 @@ CREATE TABLE IF NOT EXISTS `user_role` (
                                            KEY `u_r_rid` (`rid`),
                                            CONSTRAINT `u_r_rid` FOREIGN KEY (`rid`) REFERENCES `role` (`id`) ON DELETE CASCADE,
                                            CONSTRAINT `u_r_uid` FOREIGN KEY (`uid`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gentelella.user_role: ~1 rows (大约)
+-- Dumping data for table gentelella.user_role: ~25 rows (大约)
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
 INSERT INTO `user_role` (`id`, `uid`, `rid`) VALUES
 (1, 1, 1),
@@ -288,8 +316,8 @@ INSERT INTO `user_role` (`id`, `uid`, `rid`) VALUES
 (7, 7, 2),
 (8, 8, 2),
 (9, 9, 2),
-(10, 10, 2),
-(11, 11, 2),
+(10, 10, 7),
+(11, 11, 8),
 (12, 12, 2),
 (13, 13, 2),
 (14, 14, 2),

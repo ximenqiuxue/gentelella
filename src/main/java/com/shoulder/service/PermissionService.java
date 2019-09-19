@@ -17,5 +17,11 @@ public interface PermissionService {
 
     boolean needInterceptor(String requestUrl);
 
+    Permission getPermission(Integer id) throws Exception;
 
+    boolean addPermission(Permission permission) throws Exception;
+
+    boolean updatePermission(Permission permission) throws Exception;
+
+    boolean deletePermission(Integer id) throws Exception;
 }

@@ -36,9 +36,11 @@ public class loginController {
         try {
             subject.login(token);
             Session session = subject.getSession();
-            List<Menu> menus = menuService.getAll();
             session.setAttribute("subject", subject);
-            session.setAttribute("menus", menus);
+            if (subject.isAuthenticated()){
+                List<Menu> menus = menuService.getAuthMenu(subject.getPrincipal().toString());
+                session.setAttribute("menus", menus);
+            }
             return "redirect:/common/index.do";
         } catch (AuthenticationException e) {
             log.info("AuthenticationException :"+e.toString());

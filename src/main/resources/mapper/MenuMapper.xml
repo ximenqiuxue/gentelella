@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shoulder.mapper.MenuMapper">
+    <select id="findAuthMenu" parameterType="String" resultType="Menu">
+        SELECT m.* FROM menu m
+        LEFT JOIN role_menu rm ON rm.mid = m.id
+        LEFT JOIN user_role ur on rm.rid = ur.rid
+        LEFT JOIN user u on ur.uid = u.id
+        WHERE u.username=#{username}
+    </select>
+</mapper>

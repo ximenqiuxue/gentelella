@@ -71,9 +71,9 @@
                                     <td th:text="${iterStat.count}"></td>
                                     <td th:text="${permission.name}"></td>
                                     <td th:text="${permission.url}"></td>
-                                    <td th:text="${permission.url}"></td>
+                                    <td th:text="${permission.description}"></td>
                                     <td>
-                                        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".menu-modal" th:onclick="|editPermission(${permission.id})|"><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".permission-modal" th:onclick="|editPermission(${permission.id})|"><i class="fa fa-edit"></i></button>
                                         <button type="button" class="btn btn-dark btn-xs" th:onclick="|deletePermission(${permission.id})|"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -233,13 +233,18 @@
         $("#modalName").text("编辑资源");
         $.ajax({
             type: "GET",
-            url: BASE + "permission/list.do",
+            url: BASE + "permission/getPermission.do",
+            data: {id: id},
             beforeSend : function(){
                 loadingIndex = layer.msg('处理中', {icon: 16});
             },
             success: function (result) {
                 if (result.code == 100){
-
+                    var permission = result.data;
+                    $("#permissionId").val(permission.id);
+                    $("#name").val(permission.name);
+                    $("#url").val(permission.url);
+                    $("#description").val(permission.description);
                 }else {
                     layer.msg("获取数据异常" + result.msg, {time: 3000, icon: 5, shift: 6}, function () {});
                 }
@@ -256,7 +261,7 @@
                 $.ajax({
                     type:"POST",
                     url: BASE + "permission/addPermission.do",
-                    data: $("#menuForm").serialize(),
+                    data: $("#permissionForm").serialize(),
                     success: function (result) {
                         if (result.code == 100) {
                             //重新加载表格
@@ -271,7 +276,7 @@
                 $.ajax({
                     type:"POST",
                     url: BASE + "permission/updatePermission.do",
-                    data: $("#menuForm").serialize(),
+                    data: $("#permissionForm").serialize(),
                     success: function (result) {
                         if (result.code == 100) {
                             //重新加载表格
@@ -286,7 +291,7 @@
         }
     }
 
-    function deleteMenu(id) {
+    function deletePermission(id) {
         layer.confirm('确定删除吗？', function (index) {
             $.ajax({
                 url: BASE + "permission/deletePermission.do",

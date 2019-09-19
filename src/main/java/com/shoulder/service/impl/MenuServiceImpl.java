@@ -21,9 +21,9 @@ public class MenuServiceImpl implements MenuService {
     private MenuMapper menuMapper;
 
     @Override
-    public List<Menu> getAll() throws Exception {
+    public List<Menu> getAuthMenu(String username) throws Exception {
         List<Menu> menus = new ArrayList<>();
-        List<Menu> menuData = menuMapper.findAll();
+        List<Menu> menuData = menuMapper.findAuthMenu(username);
         Map<Integer, Menu> menuMap = new HashMap<Integer, Menu>();
         for (Menu m : menuData) {
             menuMap.put(m.getId(), m);
@@ -43,7 +43,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> getList() throws Exception{
         Map <Integer, Menu> map = new HashMap<Integer, Menu>();
-        List<Menu> menus = menuMapper.findAll();
+        List<Menu> menus = menuMapper.findList();
         for (Menu m : menus) {
             map.put(m.getId(), m);
         }

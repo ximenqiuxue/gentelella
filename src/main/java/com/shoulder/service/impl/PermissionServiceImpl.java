@@ -14,12 +14,36 @@ import java.util.Set;
 @Service
 @Transactional
 public class PermissionServiceImpl implements PermissionService {
+
     @Autowired
     PermissionMapper permissionMapper;
 
     @Override
     public List<Permission> getAllEntity() {
         return permissionMapper.findAllEntity();
+    }
+
+    @Override
+    public boolean deletePermission(Integer id) throws Exception {
+        Integer flag = permissionMapper.deleteEntity(id);
+        return flag > 0;
+    }
+
+    @Override
+    public Permission getPermission(Integer id) throws Exception {
+        return permissionMapper.getPermission(id);
+    }
+
+    @Override
+    public boolean addPermission(Permission permission) throws Exception {
+        Integer flag = permissionMapper.addEntity(permission);
+        return flag > 0;
+    }
+
+    @Override
+    public boolean updatePermission(Permission permission) throws Exception {
+        Integer flag = permissionMapper.updateEntity(permission);
+        return flag > 0;
     }
 
     @Override
@@ -56,6 +80,4 @@ public class PermissionServiceImpl implements PermissionService {
         }
         return false;
     }
-
-
 }
