@@ -1,16 +1,16 @@
 package com.shoulder.model;
 
-public class roleMenu {
+public class RolePerm {
     private Integer id;
     private Integer rid;
-    private Integer mid;
+    private Integer pid;
 
     @Override
     public String toString() {
-        return "roleMenu{" +
+        return "rolePerm{" +
                 "id=" + id +
                 ", rid=" + rid +
-                ", mid=" + mid +
+                ", pid=" + pid +
                 '}';
     }
 
@@ -30,11 +30,11 @@ public class roleMenu {
         this.rid = rid;
     }
 
-    public Integer getMid() {
-        return mid;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setMid(Integer mid) {
-        this.mid = mid;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 public class RoleController {
 
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
 
     @RequestMapping(value = "/index")
     public String getRoles(Model model) throws Exception {

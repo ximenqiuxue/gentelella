@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" th:href="@{/static/images/favicon.ico}"/>
+    <title>shoulder</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/bootstrap.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/font-awesome.min.css}">
+    <!-- NProgress -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/nprogress.css}">
+    <!--iCheck -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/green.css}">
+    <!-- bootstrap-progressbar -->
+    <link rel="stylesheet" type="text/css" th:src="@{/static/css/bootstrap/bootstrap-progressbar-3.3.4.min.css}">
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/select.dataTables.min.css}">
+    <!-- bootstrap-datetimepicker css -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datepicker/bootstrap-datetimepicker.min.css}">
+    <!-- Custom Theme Style -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
+    <!--ztree-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/metroStyle/metroStyle.css}">
+    <!--layUi js-->
+    <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <!--menu-->
+        <div th:replace="/common/menu::menu"></div>
+        <!--/menu-->
+
+        <!-- top navigation -->
+        <div th:replace="/common/navigation::top-navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>授权管理</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="accessTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#tab_content1" id="menu-tab" role="tab" data-toggle="tab" aria-expanded="true">菜单授权</a>
+                                    </li>
+                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="perm-tab" data-toggle="tab" aria-expanded="false">资源授权</a>
+                                    </li>
+                                </ul>
+                                <div id="accessTabContent" class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="menu-tab">
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>角色</h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                    <table id="roleTable" class="table table-bordered bulk_action">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>序号</th>
+                                                                <th><input id="checkAll" type="checkbox" class="flat"></th>
+                                                                <th>角色名</th>
+                                                                <th>描述</th>
+                                                                <th>Id</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr th:each="role,iterStat:${roles}">
+                                                                <td th:text="${iterStat.count}"></td>
+                                                                <td><input type="checkbox" class="flat" th:value="${role.id}"></td>
+                                                                <td th:text="${role.name}"></td>
+                                                                <td th:text="${role.description}"></td>
+                                                                <td th:text="${role.id}"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>菜单</h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                    <button type="button" class="btn btn-round btn-success btn-sm" onclick="getCheckedNodes()">
+                                                        <span>授权</span>
+                                                        <span id="checkCount" class="badge"></span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-round btn-primary btn-sm" onclick="expandNode()"><span>展开全部</span></button>
+                                                    <div>
+                                                        <ul id="menuTree" class="ztree"></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="perm-tab">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>资源</h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:replace="/common/footer::footer"></div>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/static/js/jquery/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/fastclick.js}"></script>
+<!-- NProgress -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/nprogress.js}"></script>
+<!-- iCheck -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/icheck.min.js}"></script>
+<!-- bootstrap-progressbar -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap-progressbar.min.js}"></script>
+<!--ztree-->
+<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.core.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.excheck.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.exedit.js}"></script>
+<!-- Validate-->
+<script type="text/javascript" th:src="@{/static/js/jquery/validator.js}"></script>
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/jszip.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
+<!-- bootstrap-datetimepicker js -->
+<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+<!--添加读取json体的handlebars模板引擎-->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/handlebars-v4.2.0.js}"></script>
+<!-- Custom Theme Scripts -->
+<script type="text/javascript" th:src="@{/static/js/bootstrap/custom.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var BASE = /*[[@{/}]]*/'';
+    /*]]>*/
+
+    var table, layer;
+
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+    //刷新
+    var loadingIndex = null;
+    //角色id
+    var rid = null;
+    //菜单树设置
+    var setting = {
+        async: {
+            enable: true,
+            contentType: "application/json",
+            url: getByRid
+        },
+        check: {
+            enable: true,
+            chkStyle: "checkbox"
+        },
+        callback: {
+            onCheck: onCheck
+        }
+    };
+
+    function getByRid(treeId, treeNode) {
+        var url1 = BASE + "role-access/getMenuTree.do";
+        var url2 = BASE + "role-access/getTreeMenuById.do?id=" + rid;
+        return rid == null ? url1 : url2;
+    }
+
+    $(document).ready(function () {
+        $.fn.zTree.init($("#menuTree"), setting);
+        //初始化表
+        table = $("#roleTable").DataTable({
+            "destroy": true,
+            "processing": false,
+            "bSort": false,
+            "searching": false,
+            "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
+            "oLanguage": {//多语言配置
+                "sProcessing": "加载中......",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，查询不到相关数据！",
+                "sEmptyTable": "无数据",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+                "sSearch": "搜索",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                }
+            },
+            "columns": [
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center', "visible":false}
+            ]
+        }).draw();
+    });
+    //选中状态
+    $('#roleTable tbody').on('click', 'tr', function () {
+        rid = parseInt(table.row(this).data()[4]);
+        var treeObj =  $.fn.zTree.getZTreeObj("menuTree");
+        treeObj.reAsyncChildNodes(null, "refresh");
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+
+    //展开菜单节点
+    function expandNode() {
+        var treeObj =  $.fn.zTree.getZTreeObj("menuTree");
+        treeObj.expandAll(true);
+    }
+
+    //统计选中菜单树
+    function onCheck(e, treeId, treeNode) {
+        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+        checkCount = treeObj.getCheckedNodes(true).length;
+        $("#checkCount").text(checkCount);
+    }
+
+    //授权
+    function getCheckedNodes() {
+        var ids = [];
+        $("input[type='checkbox']").each(function () {
+            if ($(this).is(':checked')) {
+                ids.push(parseInt($(this).val()));
+            }
+        });
+        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+        var nodes = treeObj.getCheckedNodes(true);
+        var accessMenuId = [];
+        for (var i = 0; i < nodes.length; i++){
+            accessMenuId.push(nodes[i].id);
+        }
+        if (ids.length < 1 || accessMenuId.length < 1){
+            layer.msg("请勾选授权选项", {time: 3000, icon: 0, shift: 6}, function () {});
+            return;
+        }else{
+            console.log(accessMenuId);
+            console.log(ids);
+        }
+    }
+
+</script>
+</body>
+</html>
