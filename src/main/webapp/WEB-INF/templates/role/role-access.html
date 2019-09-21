@@ -30,7 +30,7 @@
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
     <!--ztree-->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/metroStyle/metroStyle.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/bootstrapStyle/bootstrapStyle.css}">
     <!--layUi js-->
     <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
 </head>
@@ -78,8 +78,8 @@
                                                     <table id="roleTable" class="table table-bordered bulk_action">
                                                         <thead>
                                                             <tr>
+                                                                <th>#</th>
                                                                 <th>序号</th>
-                                                                <th><input id="checkAll" type="checkbox" class="flat"></th>
                                                                 <th>角色名</th>
                                                                 <th>描述</th>
                                                                 <th>Id</th>
@@ -87,8 +87,8 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr th:each="role,iterStat:${roles}">
-                                                                <td th:text="${iterStat.count}"></td>
                                                                 <td><input type="checkbox" class="flat" th:value="${role.id}"></td>
+                                                                <td th:text="${iterStat.count}"></td>
                                                                 <td th:text="${role.name}"></td>
                                                                 <td th:text="${role.description}"></td>
                                                                 <td th:text="${role.id}"></td>
@@ -102,14 +102,15 @@
                                             <div class="x_panel">
                                                 <div class="x_title">
                                                     <h2>菜单</h2>
+                                                    <ul class="nav navbar-right panel_toolbox">
+                                                        <button type="button" class="btn btn-round btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="点我向角色分配菜单" onclick="getCheckedNodes()">
+                                                            <span>授权</span>
+                                                            <span id="checkCount" class="badge"></span>
+                                                        </button>
+                                                    </ul>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
-                                                    <button type="button" class="btn btn-round btn-success btn-sm" onclick="getCheckedNodes()">
-                                                        <span>授权</span>
-                                                        <span id="checkCount" class="badge"></span>
-                                                    </button>
-                                                    <button type="button" class="btn btn-round btn-primary btn-sm" onclick="expandNode()"><span>展开全部</span></button>
                                                     <div>
                                                         <ul id="menuTree" class="ztree"></ul>
                                                     </div>
@@ -212,7 +213,11 @@
             chkStyle: "checkbox"
         },
         callback: {
-            onCheck: onCheck
+            onClick:function(event,treeId,treeNode){
+                return event.preventDefault();
+            },
+            onCheck: onCheck,
+            onAsyncSuccess: onCheck
         }
     };
 
@@ -269,12 +274,6 @@
         }
     });
 
-    //展开菜单节点
-    function expandNode() {
-        var treeObj =  $.fn.zTree.getZTreeObj("menuTree");
-        treeObj.expandAll(true);
-    }
-
     //统计选中菜单树
     function onCheck(e, treeId, treeNode) {
         var treeObj = $.fn.zTree.getZTreeObj("menuTree");
@@ -298,10 +297,18 @@
         }
         if (ids.length < 1 || accessMenuId.length < 1){
             layer.msg("请勾选授权选项", {time: 3000, icon: 0, shift: 6}, function () {});
-            return;
         }else{
-            console.log(accessMenuId);
-            console.log(ids);
+            $.ajax({
+                url: BASE + "role-access/addRoleMenu.do",
+                data:{rids: ids, mids: accessMenuId},
+                success: function (result) {
+                    if (result.code == 100) {
+                        layer.msg("授权成功", {time: 3000, icon: 1}, function () {});
+                    }else{
+                        layer.msg("异常：" + result.msg, {time: 3000, icon: 0, shift: 5}, function () {});
+                    }
+                }
+            });
         }
     }
 

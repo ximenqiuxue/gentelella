@@ -10,6 +10,7 @@ public class Menu {
     private String icon;
     private Integer pid;
     private boolean checked = false;
+    private boolean open = true;
     private Menu parent;
     private List<Menu> children = new ArrayList<>();
 
@@ -22,6 +23,7 @@ public class Menu {
                 ", icon='" + icon + '\'' +
                 ", pid=" + pid +
                 ", checked=" + checked +
+                ", open=" + open +
                 ", parent=" + parent +
                 ", children=" + children +
                 '}';
@@ -73,6 +75,14 @@ public class Menu {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     public Menu getParent() {

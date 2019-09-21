@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shoulder.mapper.RoleMenuMapper">
+    <insert id="addEntity" parameterType="java.util.List">
+        INSERT INTO role_menu (rid, mid) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.rid},#{item.mid})
+        </foreach>
+    </insert>
+
+    <delete id="deleteEntity" parameterType="java.util.ArrayList">
+        DELETE FROM role_menu WHERE rid in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
