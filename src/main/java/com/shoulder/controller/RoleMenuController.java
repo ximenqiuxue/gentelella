@@ -3,7 +3,6 @@ package com.shoulder.controller;
 import com.shoulder.model.Menu;
 import com.shoulder.model.Result;
 import com.shoulder.model.Role;
-import com.shoulder.model.RoleMenu;
 import com.shoulder.service.MenuService;
 import com.shoulder.service.RoleMenuService;
 import com.shoulder.service.RoleService;
@@ -12,17 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/role-access")
-public class RoleAccessController {
+@RequestMapping(value = "/role-menu")
+public class RoleMenuController {
 
-    private static final Logger log = Logger.getLogger(RoleAccessController.class);
+    private static final Logger log = Logger.getLogger(RoleMenuController.class);
 
     @Autowired
     private RoleService roleService;
@@ -35,7 +33,7 @@ public class RoleAccessController {
     public String toIndex(Model model) throws Exception{
         List<Role> roles = roleService.getAll();
         model.addAttribute("roles", roles);
-        return "role/role-access";
+        return "role/role-menu";
     }
 
     @ResponseBody

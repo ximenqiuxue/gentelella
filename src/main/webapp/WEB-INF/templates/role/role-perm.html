@@ -30,7 +30,7 @@
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
     <!--ztree-->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/bootstrapStyle/bootstrapStyle.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/metroStyle/metroStyle.css}">
     <!--layUi js-->
     <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
 </head>
@@ -50,82 +50,61 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>授权管理</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <div class="x_content">
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="accessTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab_content1" id="menu-tab" role="tab" data-toggle="tab" aria-expanded="true">资源授权</a>
+                                </li>
                             </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                                <ul id="accessTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#tab_content1" id="menu-tab" role="tab" data-toggle="tab" aria-expanded="true">菜单授权</a>
-                                    </li>
-                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="perm-tab" data-toggle="tab" aria-expanded="false">资源授权</a>
-                                    </li>
-                                </ul>
-                                <div id="accessTabContent" class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="menu-tab">
-                                        <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h2>角色</h2>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
-                                                    <table id="roleTable" class="table table-bordered bulk_action">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>序号</th>
-                                                                <th>角色名</th>
-                                                                <th>描述</th>
-                                                                <th>Id</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr th:each="role,iterStat:${roles}">
-                                                                <td><input type="checkbox" class="flat" th:value="${role.id}"></td>
-                                                                <td th:text="${iterStat.count}"></td>
-                                                                <td th:text="${role.name}"></td>
-                                                                <td th:text="${role.description}"></td>
-                                                                <td th:text="${role.id}"></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                            <div id="accessTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="menu-tab">
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>资源</h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    <button type="button" class="btn btn-round btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="点我向角色分配资源" onclick="test()">
+                                                        <span>授权</span>
+                                                        <span id="checkCount" class="badge"></span>
+                                                    </button>
+                                                </ul>
+                                                <div class="clearfix"></div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h2>菜单</h2>
-                                                    <ul class="nav navbar-right panel_toolbox">
-                                                        <button type="button" class="btn btn-round btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="点我向角色分配菜单" onclick="getCheckedNodes()">
-                                                            <span>授权</span>
-                                                            <span id="checkCount" class="badge"></span>
-                                                        </button>
-                                                    </ul>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
-                                                    <div>
-                                                        <ul id="menuTree" class="ztree"></ul>
-                                                    </div>
-                                                </div>
+                                            <div class="x_content">
+                                                <table id="permissionTable" class="table table-hover table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>序号</th>
+                                                        <th>资源名</th>
+                                                        <th>路径</th>
+                                                        <th>描述</th>
+                                                        <th>Id</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="permission,iterStat:${permissions}">
+                                                        <td><input th:id="${'checkbox_' + permission.id}" type="checkbox"></td>
+                                                        <td th:text="${iterStat.count}"></td>
+                                                        <td th:text="${permission.name}"></td>
+                                                        <td th:text="${permission.url}"></td>
+                                                        <td th:text="${permission.description}"></td>
+                                                        <td th:text="${permission.id}"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="perm-tab">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h2>资源</h2>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="x_panel fixed_height_390">
+                                            <div class="x_title">
+                                                <h2>角色</h2>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+                                                <div>
+                                                    <ul id="roleTree" class="ztree"></ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,7 +171,7 @@
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
 
-    var table, layer;
+    var permissionTable,layer;
 
     layui.use('layer', function () {
         layer = layui.layer;
@@ -201,12 +180,14 @@
     var loadingIndex = null;
     //角色id
     var rid = null;
+    var pid = null;
+
     //菜单树设置
     var setting = {
         async: {
             enable: true,
             contentType: "application/json",
-            url: getByRid
+            url: BASE + "role-perm/getRoleTree.do"
         },
         check: {
             enable: true,
@@ -215,22 +196,14 @@
         callback: {
             onClick:function(event,treeId,treeNode){
                 return event.preventDefault();
-            },
-            onCheck: onCheck,
-            onAsyncSuccess: onCheck
+            }
         }
     };
 
-    function getByRid(treeId, treeNode) {
-        var url1 = BASE + "role-access/getMenuTree.do";
-        var url2 = BASE + "role-access/getTreeMenuById.do?id=" + rid;
-        return rid == null ? url1 : url2;
-    }
-
     $(document).ready(function () {
-        $.fn.zTree.init($("#menuTree"), setting);
+        $.fn.zTree.init($("#roleTree"), setting);
         //初始化表
-        table = $("#roleTable").DataTable({
+        permissionTable = $("#permissionTable").DataTable({
             "destroy": true,
             "processing": false,
             "bSort": false,
@@ -256,60 +229,37 @@
                 {"className": 'text-center'},
                 {"className": 'text-center'},
                 {"className": 'text-center'},
+                {"className": 'text-center'},
                 {"className": 'text-center', "visible":false}
             ]
         }).draw();
     });
     //选中状态
-    $('#roleTable tbody').on('click', 'tr', function () {
-        rid = parseInt(table.row(this).data()[4]);
-        var treeObj =  $.fn.zTree.getZTreeObj("menuTree");
-        treeObj.reAsyncChildNodes(null, "refresh");
+    $('#permissionTable tbody').on('click', 'tr', function () {
+        pid = parseInt(permissionTable.row(this).data()[5]);
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
         else {
-            table.$('tr.selected').removeClass('selected');
+            permissionTable.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
     });
-
-    //统计选中菜单树
-    function onCheck(e, treeId, treeNode) {
-        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
-        checkCount = treeObj.getCheckedNodes(true).length;
-        $("#checkCount").text(checkCount);
-    }
-
-    //授权
-    function getCheckedNodes() {
-        var ids = [];
-        $("input[type='checkbox']").each(function () {
-            if ($(this).is(':checked')) {
-                ids.push(parseInt($(this).val()));
-            }
-        });
-        var treeObj = $.fn.zTree.getZTreeObj("menuTree");
-        var nodes = treeObj.getCheckedNodes(true);
-        var accessMenuId = [];
-        for (var i = 0; i < nodes.length; i++){
-            accessMenuId.push(nodes[i].id);
-        }
-        if (ids.length < 1 || accessMenuId.length < 1){
-            layer.msg("请勾选授权选项", {time: 3000, icon: 0, shift: 6}, function () {});
-        }else{
-            $.ajax({
-                url: BASE + "role-access/addRoleMenu.do",
-                data:{rids: ids, mids: accessMenuId},
-                success: function (result) {
-                    if (result.code == 100) {
-                        layer.msg("授权成功", {time: 3000, icon: 1}, function () {});
-                    }else{
-                        layer.msg("异常：" + result.msg, {time: 3000, icon: 0, shift: 5}, function () {});
-                    }
+    
+    function test() {
+        console.log(rid);
+        $.ajax({
+            url: BASE + "role-perm/getRolePerm.do",
+            data: {rid : rid},
+            success: function (result) {
+                var rolePerms = result.data;
+                for(var i = 0; i < rolePerms.length; i++) {
+                    var checkedId = "checkbox_" + rolePerms[i].pid;
+                    $('input[type=checkbox]:checked', '#checkedId').prop('checked', true);
+                    console.log("2");
                 }
-            });
-        }
+            }
+        })
     }
 
 </script>

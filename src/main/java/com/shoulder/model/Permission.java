@@ -9,6 +9,8 @@ public class Permission {
 
     private String url;
 
+    private boolean checked = false;
+
     @Override
     public String toString() {
         return "Permission{" +
@@ -16,6 +18,7 @@ public class Permission {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
+                ", checked=" + checked +
                 '}';
     }
 
@@ -49,5 +52,13 @@ public class Permission {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }
