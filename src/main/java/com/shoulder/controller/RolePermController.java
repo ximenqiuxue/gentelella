@@ -26,8 +26,8 @@ public class RolePermController {
 
     @RequestMapping(value = "/index")
     public String toIndex(Model model) throws Exception {
-        List<Permission> permissions = permissionService.getAllEntity();
-        model.addAttribute("permissions", permissions);
+        /*List<Permission> permissions = permissionService.getAllEntity();
+        model.addAttribute("permissions", permissions);*/
         return "role/role-perm";
     }
 

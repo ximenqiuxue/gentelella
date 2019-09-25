@@ -1,8 +1,11 @@
 package com.shoulder.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.shoulder.model.PageResult;
 import com.shoulder.model.Result;
 import com.shoulder.model.Role;
 import com.shoulder.service.RoleService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,8 @@ import java.util.Map;
 @RequestMapping(value = "/role")
 public class RoleController {
 
+    private static final Logger log = Logger.getLogger(RoleController.class);
+
     @Autowired
     private RoleService roleService;
 
@@ -27,6 +32,17 @@ public class RoleController {
         List<Role> roles = roleService.getAll();
         model.addAttribute("roles", roles);
         return "role/list";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRoleList", method = RequestMethod.GET)
+    public PageResult roleList(Integer page, Integer limit) {
+        try {
+            PageInfo pageInfo = roleService.findPageList(page, limit);
+            return PageResult.PageReturn("0", String.valueOf(pageInfo.getTotal()),pageInfo.getList());
+        } catch (Exception e) {
+            return PageResult.PageError("500", e.getMessage());
+        }
     }
 
     @ResponseBody

@@ -1,5 +1,7 @@
 package com.shoulder.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.shoulder.model.PageResult;
 import com.shoulder.model.Permission;
 import com.shoulder.model.Result;
 import com.shoulder.service.PermissionService;
@@ -20,10 +22,21 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @RequestMapping(value = "/index")
-    public String toIndex(Model model) {
+    public String toIndex(Model model) throws Exception {
         List<Permission> permissions = permissionService.getAllEntity();
         model.addAttribute("permissions", permissions);
         return "permission/list";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPermList", method = RequestMethod.GET)
+    public PageResult permissionList(Integer page, Integer limit) {
+        try {
+            PageInfo pageInfo = permissionService.findPageList(page, limit);
+            return PageResult.PageReturn("0", String.valueOf(pageInfo.getTotal()),pageInfo.getList());
+        } catch (Exception e) {
+            return PageResult.PageError("500", e.getMessage());
+        }
     }
 
     @ResponseBody

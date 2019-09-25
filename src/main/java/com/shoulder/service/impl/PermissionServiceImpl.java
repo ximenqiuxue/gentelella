@@ -1,5 +1,7 @@
 package com.shoulder.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shoulder.mapper.PermissionMapper;
 import com.shoulder.model.Permission;
 import com.shoulder.service.PermissionService;
@@ -18,39 +20,95 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     PermissionMapper permissionMapper;
 
+    /**
+     * 获取所有perm
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<Permission> getAllEntity() {
-        return permissionMapper.findAllEntity();
+    public List<Permission> getAllEntity() throws Exception {
+        return permissionMapper.findAll();
     }
 
+    /**
+     * 获取带有分页信息的perm
+     * @param page
+     * @param limit
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean deletePermission(Integer id) throws Exception {
-        Integer flag = permissionMapper.deleteEntity(id);
-        return flag > 0;
+    public PageInfo findPageList(Integer page, Integer limit) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<Permission> roles = permissionMapper.findAll();
+        PageInfo pageInfo = new PageInfo(roles);
+        return pageInfo;
     }
 
+    /**
+     * 根据id获取perm
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Override
     public Permission getPermission(Integer id) throws Exception {
         return permissionMapper.getPermission(id);
     }
 
+    /**
+     * 增加perm
+     * @param permission
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean addPermission(Permission permission) throws Exception {
         Integer flag = permissionMapper.addEntity(permission);
         return flag > 0;
     }
 
+    /**
+     * 修改perm
+     * @param permission
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean updatePermission(Permission permission) throws Exception {
         Integer flag = permissionMapper.updateEntity(permission);
         return flag > 0;
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deletePermission(Integer id) throws Exception {
+        Integer flag = permissionMapper.deleteEntity(id);
+        return flag > 0;
+    }
+
+    /**
+     * 初始化获取perm权限
+     * @param username
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Permission> getPermission(String username) throws Exception {
         return permissionMapper.findPermission(username);
     }
 
+    /**
+     * 获取perm授权名称
+     * @param username
+     * @return
+     * @throws Exception
+     */
     @Override
     public Set<String> getPermissionName(String username) throws Exception {
         Set<String> permissionName = new HashSet<String>();
@@ -61,6 +119,12 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionName;
     }
 
+    /**
+     * 获取perm授权的url
+     * @param username
+     * @return
+     * @throws Exception
+     */
     @Override
     public Set<String> getPermissionUrls(String username) throws Exception {
         Set<String> permissionUrl = new HashSet<String>();
@@ -71,8 +135,14 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionUrl;
     }
 
+    /**
+     * 获取过滤器权限
+     * @param requestUrl
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean needInterceptor(String requestUrl) {
+    public boolean needInterceptor(String requestUrl) throws Exception {
         List<Permission> permissions = getAllEntity();
         for (Permission p : permissions) {
             if(p.getUrl().equals(requestUrl))

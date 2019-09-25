@@ -1,5 +1,7 @@
 package com.shoulder.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shoulder.mapper.RoleMapper;
 import com.shoulder.model.Role;
 import com.shoulder.service.RoleService;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -36,6 +39,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getAll() throws Exception {
         return roleMapper.findAll();
+    }
+
+    @Override
+    public PageInfo<Map> findPageList(Integer page, Integer limit) throws Exception {
+        PageHelper.startPage(page, limit);
+        List<Role> roles = roleMapper.findAll();
+        PageInfo pageInfo = new PageInfo(roles);
+        return pageInfo;
     }
 
     @Override

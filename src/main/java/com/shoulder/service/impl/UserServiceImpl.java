@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteById(Integer userId) throws Exception {
         Integer delFlag = userMapper.deleteUser(userId);
-        log.info("delFlag:" + delFlag);
         return delFlag > 0;
     }
 
@@ -50,7 +49,6 @@ public class UserServiceImpl implements UserService {
             Integer userFlag = userMapper.updateUserByEntity(user);
             Integer deptFlag = userDeptMapper.updateUserDept(userDept);
             Integer roleFlag = userRoleMapper.updateUserRole(userRole);
-            log.info("returnparam :" + userFlag + ":" + deptFlag + ":" + roleFlag);
             return userFlag > 0 & deptFlag > 0 & roleFlag > 0;
         } else {
             Integer generatedKey = userMapper.addUser(user);

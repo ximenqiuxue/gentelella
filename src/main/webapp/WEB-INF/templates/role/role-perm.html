@@ -16,23 +16,10 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/nprogress.css}">
     <!--iCheck -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/green.css}">
-    <!-- bootstrap-progressbar -->
-    <link rel="stylesheet" type="text/css" th:src="@{/static/css/bootstrap/bootstrap-progressbar-3.3.4.min.css}">
-    <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/select.dataTables.min.css}">
-    <!-- bootstrap-datetimepicker css -->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datepicker/bootstrap-datetimepicker.min.css}">
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
-    <!--ztree-->
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/ztree/css/metroStyle/metroStyle.css}">
-    <!--layUi js-->
-    <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
+    <!--layUi css-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/js/layui/css/layui.css}">
 </head>
 
 <body class="nav-md">
@@ -53,59 +40,30 @@
                     <div class="x_content">
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="accessTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#tab_content1" id="menu-tab" role="tab" data-toggle="tab" aria-expanded="true">资源授权</a>
+                                <li role="presentation" class="active"><a href="#tab_content1" id="perm-tab" role="tab" data-toggle="tab" aria-expanded="true">资源授权</a>
                                 </li>
                             </ul>
                             <div id="accessTabContent" class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="menu-tab">
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="perm-tab">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="x_panel">
-                                            <div class="x_title">
-                                                <h2>资源</h2>
-                                                <ul class="nav navbar-right panel_toolbox">
-                                                    <button type="button" class="btn btn-round btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="点我向角色分配资源" onclick="test()">
-                                                        <span>授权</span>
-                                                        <span id="checkCount" class="badge"></span>
-                                                    </button>
-                                                </ul>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="x_content">
-                                                <table id="permissionTable" class="table table-hover table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>序号</th>
-                                                        <th>资源名</th>
-                                                        <th>路径</th>
-                                                        <th>描述</th>
-                                                        <th>Id</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr th:each="permission,iterStat:${permissions}">
-                                                        <td><input th:id="${'checkbox_' + permission.id}" type="checkbox"></td>
-                                                        <td th:text="${iterStat.count}"></td>
-                                                        <td th:text="${permission.name}"></td>
-                                                        <td th:text="${permission.url}"></td>
-                                                        <td th:text="${permission.description}"></td>
-                                                        <td th:text="${permission.id}"></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="x_panel fixed_height_390">
                                             <div class="x_title">
                                                 <h2>角色</h2>
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content">
-                                                <div>
-                                                    <ul id="roleTree" class="ztree"></ul>
-                                                </div>
+                                                <table class="layui-hide" id="roleTable"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>资源</h2>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+                                                <table class="layui-hide" id="permTable"></table>
                                             </div>
                                         </div>
                                     </div>
@@ -134,133 +92,76 @@
 <script type="text/javascript" th:src="@{/static/js/bootstrap/nprogress.js}"></script>
 <!-- iCheck -->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/icheck.min.js}"></script>
-<!-- bootstrap-progressbar -->
-<script type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap-progressbar.min.js}"></script>
-<!--ztree-->
-<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.core.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.excheck.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/ztree/js/jquery.ztree.exedit.js}"></script>
-<!-- Validate-->
-<script type="text/javascript" th:src="@{/static/js/jquery/validator.js}"></script>
-<!-- Datatables -->
-<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/jszip.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
-<!-- bootstrap-datetimepicker js -->
-<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/datepicker/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+<!--layUi js-->
+<script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
 <!--添加读取json体的handlebars模板引擎-->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/custom.min.js}"></script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" onclick="getCheckData()" data-toggle="tooltip" data-placement="top" title="点我向角色分配资源">授权</button>
+        <span id="checkCount" class="badge"></span>
+    </div>
+</script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
 
-    var permissionTable,layer;
+    var roleTable,permTable;
 
-    layui.use('layer', function () {
-        layer = layui.layer;
+    layui.use(["table","layer"], function () {
+        var layer = layui.layer;
+        roleTable = layui.table;
+        permTable = layui.table;
+
+        roleTable.render({
+            id: 'table1',
+            elem: '#roleTable',
+            url: BASE + 'role/getRoleList.do',
+            cellMinWidth: 80,
+            cols: [[
+                /*列定义*/
+                {type:'checkbox'},
+                {type: 'numbers',title: '序号'},
+                {field:'name', title: '角色名', align: 'center'},
+                {field:'description', title: '描述', align: 'center'},
+            ]],
+            page: true
+        });
+
+        permTable.render({
+            id: 'table2',
+            elem: '#permTable',
+            url: BASE + 'permission/getPermList.do',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: [],
+            cols: [[
+                /*列定义*/
+                {type:'checkbox'},
+                {type: 'numbers',title: '序号'},
+                {field:'name', title: '资源名', align: 'center'},
+                {field:'url', title: '访问路径', align: 'center'},
+                {field:'description', title: '描述', align: 'center'}
+            ]],
+            page: true
+        });
+        permTable.on('row(permTable)',function (obj) {
+            console.log("9999999")
+        });
+
     });
+
+    function getCheckData() {
+        var checkStatus = permTable.checkStatus('table2'),
+        data = checkStatus.data;
+        layer.alert(JSON.stringify(data));
+    }
+
     //刷新
     var loadingIndex = null;
-    //角色id
-    var rid = null;
-    var pid = null;
 
-    //菜单树设置
-    var setting = {
-        async: {
-            enable: true,
-            contentType: "application/json",
-            url: BASE + "role-perm/getRoleTree.do"
-        },
-        check: {
-            enable: true,
-            chkStyle: "checkbox"
-        },
-        callback: {
-            onClick:function(event,treeId,treeNode){
-                return event.preventDefault();
-            }
-        }
-    };
-
-    $(document).ready(function () {
-        $.fn.zTree.init($("#roleTree"), setting);
-        //初始化表
-        permissionTable = $("#permissionTable").DataTable({
-            "destroy": true,
-            "processing": false,
-            "bSort": false,
-            "searching": false,
-            "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
-            "oLanguage": {//多语言配置
-                "sProcessing": "加载中......",
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "对不起，查询不到相关数据！",
-                "sEmptyTable": "无数据",
-                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-                "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
-                "sSearch": "搜索",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sLast": "末页"
-                }
-            },
-            "columns": [
-                {"className": 'text-center'},
-                {"className": 'text-center'},
-                {"className": 'text-center'},
-                {"className": 'text-center'},
-                {"className": 'text-center'},
-                {"className": 'text-center', "visible":false}
-            ]
-        }).draw();
-    });
-    //选中状态
-    $('#permissionTable tbody').on('click', 'tr', function () {
-        pid = parseInt(permissionTable.row(this).data()[5]);
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        }
-        else {
-            permissionTable.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    });
-    
-    function test() {
-        console.log(rid);
-        $.ajax({
-            url: BASE + "role-perm/getRolePerm.do",
-            data: {rid : rid},
-            success: function (result) {
-                var rolePerms = result.data;
-                for(var i = 0; i < rolePerms.length; i++) {
-                    var checkedId = "checkbox_" + rolePerms[i].pid;
-                    $('input[type=checkbox]:checked', '#checkedId').prop('checked', true);
-                    console.log("2");
-                }
-            }
-        })
-    }
 
 </script>
 </body>

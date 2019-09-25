@@ -15,8 +15,8 @@ public interface PermissionMapper {
 
     List<Permission> findPermission(String username) throws Exception;
 
-    @Select("SELECT * FROM permission ORDER BY name;")
-    List<Permission> findAllEntity();
+    @Select("SELECT * FROM permission ORDER BY name")
+    List<Permission> findAll() throws Exception;
 
     @Select("SELECT * FROM permission WHERE id=#{id}")
     Permission getPermission(Integer id) throws Exception;
