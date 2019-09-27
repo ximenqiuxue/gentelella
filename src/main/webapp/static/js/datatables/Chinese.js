@@ -1,4 +1,4 @@
-{
+$.fn.dataTable.defaults.oLanguage = {
     "sProcessing":   "正在加载数据...",
     "sLengthMenu":   "每页显示 _MENU_ 条结果",
     "sZeroRecords":  "没有匹配结果",
@@ -13,8 +13,8 @@
     "sInfoThousands":  ",",
     "oPaginate": {
         "sFirst":    "首页",
-        "sPrevious": "前一页",
-        "sNext":     "后一页",
+        "sPrevious": "上一页",
+        "sNext":     "下一页",
         "sLast":     "尾页"
     },
     "oAria": {

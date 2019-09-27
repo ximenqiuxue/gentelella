@@ -16,6 +16,13 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/nprogress.css}">
     <!--iCheck -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/green.css}">
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/dataTables.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/buttons.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/fixedHeader.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/responsive.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/scroller.bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/datatables/select.dataTables.min.css}">
     <!-- Custom Theme Style -->
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/static/css/bootstrap/custom.min.css}">
     <!--layUi css-->
@@ -52,7 +59,26 @@
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content">
-                                                <table class="layui-hide" id="roleTable"></table>
+                                                <table id="roleTable" class="table table-hover table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>序号</th>
+                                                        <th>角色名</th>
+                                                        <th>描述</th>
+                                                        <th>Id</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="role,iterStat:${roles}">
+                                                        <td><input type="checkbox" th:onclick="|getCheckedRid(${role.id})|"></td>
+                                                        <td th:text="${iterStat.count}"></td>
+                                                        <td th:text="${role.name}"></td>
+                                                        <td th:text="${role.description}"></td>
+                                                        <td th:text="${role.id}"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -60,10 +86,35 @@
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <h2>资源</h2>
+                                                <ul class="nav navbar-right panel_toolbox">
+                                                    <button type="button" class="btn btn-round btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="点我向角色分配菜单" onclick="authCheckedNodes()">
+                                                        <span>授权</span>
+                                                        <span id="checkCount" class="badge"></span>
+                                                    </button>
+                                                </ul>
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content">
-                                                <table class="layui-hide" id="permTable"></table>
+                                                <table id="permissionTable" class="table table-hover table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>序号</th>
+                                                        <th>资源名</th>
+                                                        <th>路径</th>
+                                                        <th>描述</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <!--<tbody>
+                                                        <tr th:each="permission,iterStat:${permissions}">
+                                                            <td><input type="checkbox" th:onchange="|getCheckedPid(${permission.id})|"></td>
+                                                            <td th:text="${iterStat.count}"></td>
+                                                            <td th:text="${permission.name}"></td>
+                                                            <td th:text="${permission.url}"></td>
+                                                            <td th:text="${permission.description}"></td>
+                                                        </tr>
+                                                    </tbody>-->
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -92,75 +143,159 @@
 <script type="text/javascript" th:src="@{/static/js/bootstrap/nprogress.js}"></script>
 <!-- iCheck -->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/icheck.min.js}"></script>
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/static/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/Chinese.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.flash.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.html5.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/buttons.print.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.fixedHeader.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.keyTable.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.responsive.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/responsive.bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.scroller.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/jszip.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/pdfmake.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/vfs_fonts.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/datatables/dataTables.select.min.js}"></script>
 <!--layUi js-->
 <script type="text/javascript" th:src="@{/static/js/layui/layui.all.js}"></script>
 <!--添加读取json体的handlebars模板引擎-->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/handlebars-v4.2.0.js}"></script>
 <!-- Custom Theme Scripts -->
 <script type="text/javascript" th:src="@{/static/js/bootstrap/custom.min.js}"></script>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" onclick="getCheckData()" data-toggle="tooltip" data-placement="top" title="点我向角色分配资源">授权</button>
-        <span id="checkCount" class="badge"></span>
-    </div>
-</script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var BASE = /*[[@{/}]]*/'';
     /*]]>*/
 
-    var roleTable,permTable;
+    $(document).ready(function() {
+        var roleTable = $('#roleTable').DataTable({
+            "destroy": true,
+            "processing": false,
+            "bSort": false,
+            "searching": false,
+            "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
+            "columns": [
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center'},
+                {"className": 'text-center', "visible":false}
+            ]
+        }).draw();
 
-    layui.use(["table","layer"], function () {
-        var layer = layui.layer;
-        roleTable = layui.table;
-        permTable = layui.table;
+        var permissionTable = $('#permissionTable').DataTable({
+            "destroy": true,
+            "processing": false,
+            "bSort": false,
+            "searching": false,
+            "lengthMenu": [ [10, 20, 30],['10','20','30'] ],//自定义分页长度
+            "columns": [
+                {"data":"checked","className": 'text-center'},
+                {"data":"null","className": 'text-center'},
+                {"data":"name","className": 'text-center'},
+                {"data":"url","className": 'text-center'},
+                {"data":"description","className": 'text-center'}
+            ],
+            "columnDefs": [
+                {
+                    'targets':[0],
+                    'searchable':false,
+                    'orderable':false,
+                    'className': 'dt-body-center',
+                    'render': function (data, type, row){
+                        if (row.checked == true){
+                            pids.push(row.id);
+                            return '<input type="checkbox" checked onchange="getCheckedPid('+ row.id +')"/>';
+                        }else {
+                            return '<input type="checkbox" onchange="getCheckedPid('+ row.id +')"/>';
+                        }
+                    }
+                },
+                {
+                    "targets":[1],
+                    render:function(data,type,row,meta) {
+                        return meta.row + 1;
+                    }
+                }
+            ]
+        }).draw();
 
-        roleTable.render({
-            id: 'table1',
-            elem: '#roleTable',
-            url: BASE + 'role/getRoleList.do',
-            cellMinWidth: 80,
-            cols: [[
-                /*列定义*/
-                {type:'checkbox'},
-                {type: 'numbers',title: '序号'},
-                {field:'name', title: '角色名', align: 'center'},
-                {field:'description', title: '描述', align: 'center'},
-            ]],
-            page: true
+        $.ajax({
+            url: BASE + "permission/getPermList.do",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                var currentPage = permissionTable.page();//该行是固定写死的
+                permissionTable.clear();//清理原数据
+                permissionTable.rows.add(result.data); //添加新数据
+                permissionTable.page(currentPage).draw(false);
+            }
         });
 
-        permTable.render({
-            id: 'table2',
-            elem: '#permTable',
-            url: BASE + 'permission/getPermList.do',
-            toolbar: '#toolbarDemo',
-            defaultToolbar: [],
-            cols: [[
-                /*列定义*/
-                {type:'checkbox'},
-                {type: 'numbers',title: '序号'},
-                {field:'name', title: '资源名', align: 'center'},
-                {field:'url', title: '访问路径', align: 'center'},
-                {field:'description', title: '描述', align: 'center'}
-            ]],
-            page: true
+        $('#roleTable tbody').on( 'click', 'tr', function () {
+            pids = [];
+            var rid = parseInt(roleTable.row(this).data()[4]);
+            $.ajax({
+                url: BASE + "role-perm/getAuthPerm.do",
+                data: {rid : rid},
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var currentPage = permissionTable.page();//该行是固定写死的
+                    permissionTable.clear();//清理原数据
+                    permissionTable.rows.add(result.data); //添加新数据
+                    permissionTable.page(currentPage).draw(false);
+                }
+            })
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                roleTable.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
         });
-        permTable.on('row(permTable)',function (obj) {
-            console.log("9999999")
-        });
-
     });
 
-    function getCheckData() {
-        var checkStatus = permTable.checkStatus('table2'),
-        data = checkStatus.data;
-        layer.alert(JSON.stringify(data));
+    var rids = [];
+    var pids = [];
+
+    function getCheckedRid(id) {
+        console.log(id);
+        if ($.inArray(id, rids) > -1){
+            rids.splice($.inArray(id, rids),1);
+        }else {
+            rids.push(id);
+        }
+        console.log(rids);
     }
 
-    //刷新
-    var loadingIndex = null;
+    function getCheckedPid(id) {
+        if ($.inArray(id, pids) > -1){
+            pids.splice($.inArray(id, pids), 1);
+        }else {
+            pids.push(id);
+        }
+        console.log(pids);
+    }
+
+    function authCheckedNodes() {
+        console.log(rids);
+        console.log(pids);
+        /*$.ajax({
+            url: BASE + "role-perm/getRoleTree.do",
+            data: {rids : rids, pids : pids},
+            success: function (result) {
+                console.log(result);
+            }
+        })*/
+    }
+
 
 
 </script>

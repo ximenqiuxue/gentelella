@@ -10,5 +10,5 @@ import java.util.List;
 public interface RolePermMapper {
 
     @Select("SELECT * FROM role_permission WHERE rid =#{rid};")
-    List<RolePerm> findEntity(Integer id) throws Exception;
+    List<RolePerm> findAuthEntity(Integer id) throws Exception;
 }

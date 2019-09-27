@@ -30,12 +30,11 @@ public class PermissionController {
 
     @ResponseBody
     @RequestMapping(value = "/getPermList", method = RequestMethod.GET)
-    public PageResult permissionList(Integer page, Integer limit) {
+    public Result permissionList(Integer page, Integer limit) {
         try {
-            PageInfo pageInfo = permissionService.findPageList(page, limit);
-            return PageResult.PageReturn("0", String.valueOf(pageInfo.getTotal()),pageInfo.getList());
+            return Result.success(permissionService.getAllEntity());
         } catch (Exception e) {
-            return PageResult.PageError("500", e.getMessage());
+            return Result.failure(e.getMessage());
         }
     }
 
