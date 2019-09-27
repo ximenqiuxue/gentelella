@@ -31,21 +31,6 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * 获取带有分页信息的perm
-     * @param page
-     * @param limit
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public PageInfo findPageList(Integer page, Integer limit) throws Exception {
-        PageHelper.startPage(page, limit);
-        List<Permission> roles = permissionMapper.findAll();
-        PageInfo pageInfo = new PageInfo(roles);
-        return pageInfo;
-    }
-
-    /**
      * 根据id获取perm
      * @param id
      * @return

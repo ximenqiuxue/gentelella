@@ -15,15 +15,6 @@ public interface PermissionService {
     List<Permission> getAllEntity() throws Exception;
 
     /**
-     * 获取带有分页信息的perm
-     * @param page
-     * @param limit
-     * @return
-     * @throws Exception
-     */
-    PageInfo findPageList(Integer page, Integer limit) throws Exception;
-
-    /**
      * 根据id获取perm
      * @param id
      * @return
