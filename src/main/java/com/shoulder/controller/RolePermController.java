@@ -1,10 +1,8 @@
 package com.shoulder.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.shoulder.model.Permission;
 import com.shoulder.model.Result;
 import com.shoulder.model.Role;
-import com.shoulder.model.RolePerm;
 import com.shoulder.service.PermissionService;
 import com.shoulder.service.RolePermService;
 import com.shoulder.service.RoleService;
